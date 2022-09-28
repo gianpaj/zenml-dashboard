@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { toasterTypes } from '../../../../constants';
 import {
   organizationActions,
+  pipelinesActions,
   showToasterAction,
+  stackComponentsActions,
   userActions,
-  workspacesActions,
+  // workspacesActions,
 } from '../../../../redux/actions';
 import { loginAction } from '../../../../redux/actions/session/loginAction';
 import { useDispatch } from '../../../hooks';
@@ -13,8 +15,8 @@ import { translate } from './translate';
 interface ServiceInterface {
   login: () => void;
   hasSubmittedWithErrors: boolean;
-  email: string;
-  setEmail: (password: string) => void;
+  username: string;
+  setUsername: (password: string) => void;
   password: string;
   setPassword: (password: string) => void;
   loading: boolean;
@@ -22,7 +24,7 @@ interface ServiceInterface {
 
 export const useService = (): ServiceInterface => {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [hasSubmittedWithErrors, setHasSubmittedWithErrors] = useState(false);
 
@@ -32,11 +34,11 @@ export const useService = (): ServiceInterface => {
     login: () => {
       setLoading(true);
       setHasSubmittedWithErrors(true);
-      if (email.trim() !== '' && password.trim() !== '') {
+      if (username.trim() !== '' && password.trim() !== '') {
         dispatch(
           loginAction({
             password,
-            email,
+            username,
             onFailure: (errorText) => {
               dispatch(
                 showToasterAction({
@@ -53,17 +55,19 @@ export const useService = (): ServiceInterface => {
                   type: toasterTypes.success,
                 }),
               );
-              dispatch(workspacesActions.getMy({}));
+              // dispatch(workspacesActions.getMy({}));
               dispatch(organizationActions.getMy());
               dispatch(userActions.getMy({}));
+              dispatch(stackComponentsActions.getTypes());
+              dispatch(pipelinesActions.getMy());
             },
           }),
         );
       }
     },
     hasSubmittedWithErrors,
-    email,
-    setEmail,
+    username,
+    setUsername,
     password,
     setPassword,
     loading,

@@ -27,20 +27,20 @@ export const List: React.FC = () => {
     history.push(routePaths.pipeline.configuration(pipeline.id));
   };
 
-  console.log('test');
-
+  // debugger;
   return (
     <>
       <CollapseTable
-        renderAfterRow={(pipeline: TPipeline) => (
+        renderAfterRow={(pipeline: TPipeline) => ( 
           <RunsForPipelineTable
             pipeline={pipeline}
             openPipelineIds={openPipelineIds}
             fetching={fetching}
+            nestedRow={true}
           />
         )}
         loading={fetching}
-        showHeader={false}
+        showHeader={true}
         headerCols={headerCols}
         tableRows={filteredPipelines}
         emptyState={{ text: translate('emptyState.text') }}

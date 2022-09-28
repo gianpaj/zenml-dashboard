@@ -21,6 +21,14 @@ import pipelinesReducer, {
   initialState as pipelinesInitialState,
 } from './reducers/pipelinesReducer';
 
+import stacksReducer, {
+  initialState as stacksInitialState,
+} from './reducers/stacksReducer';
+
+import stackComponentsReducer, {
+  initialState as stackComponentsInitialState,
+} from './reducers/stackComponentsReducer';
+
 import runsReducer, {
   initialState as runsInitialState,
 } from './reducers/runsReducer';
@@ -33,6 +41,10 @@ import pipelinePagesReducer, {
   initialState as pipelinePagesInitialState,
 } from './reducers/pipelinePagesReducer';
 
+import stackPagesReducer, {
+  initialState as stackPagesInitialState,
+} from './reducers/stackPagesReducer';
+
 import stripeReducer, {
   initialState as sripeInitialState,
 } from './reducers/stripeReducer';
@@ -43,9 +55,12 @@ const initialState = {
   organizations: organizationsInitialState,
   workspaces: workspacesInitialState,
   pipelines: pipelinesInitialState,
+  stacks: stacksInitialState,
+  stackComponents: stackComponentsInitialState,
   runs: runsInitialState,
   billing: billingInitialState,
   pipelinePages: pipelinePagesInitialState,
+  stacksPages: stackPagesInitialState,
   stripe: sripeInitialState,
 };
 
@@ -55,9 +70,12 @@ export const persisted = combineReducers({
   organizations: organizationsReducer,
   workspaces: workspacesReducer,
   pipelines: pipelinesReducer,
+  stacks: stacksReducer,
+  stackComponents: stackComponentsReducer,
   runs: runsReducer,
   billing: billingReducer,
   pipelinePages: pipelinePagesReducer,
+  stackPages: stackPagesReducer,
   stripe: stripeReducer,
 });
 

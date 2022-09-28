@@ -35,8 +35,10 @@ type TClickEvent = (arg1: React.MouseEvent) => void;
 interface TUser {
   id: TId;
   fullName: string;
+  name: string;
   email: string;
   organizationId: TId;
+  userName: string;
 }
 
 interface TOrganization {
@@ -58,8 +60,9 @@ interface TMember {
   organizationId: string;
   fullName: string;
   email: string;
-  createdAt: Date;
-  role: string;
+  created_at: Date;
+  active: boolean;
+  activation_token: string;
 }
 
 interface TWorkspace {
@@ -71,13 +74,48 @@ interface TWorkspace {
 interface TPipeline {
   id: TId;
   name: string;
-  createdAt: Date;
-  workspaceId: TId;
+  created: Date;
+  creationDate: Date;
+  projectName: string;
+  // workspaceId: TId;
+  components: any;
+  owner: string;
   pipelineConfig: any;
   userId: TId;
+  creationDate: Date;
+  isShared: boolean;
+  userName: string;
+  user: any;
+  runs: Array;
+  status: Array;
+  configuration: object;
+  spec?: any;
 }
-
-type TRunStatus = 'Succeeded' | 'Running' | 'Failed';
+interface TStack {
+  id: TId;
+  name: string;
+  creationDate: Date;
+  created: Date;
+  projectName: string;
+  // workspaceId: TId;
+  components: any;
+  userName: string;
+  pipelineConfig: any;
+  userId: TId;
+  createdAt: Date;
+  type?: string;
+  flavor?: string;
+  configuration?: any;
+  project?: string;
+  user?: any;
+  isShared?: Boolean;
+}
+type TRunStatus =
+  | 'Finished'
+  | 'In Progress'
+  | 'completed'
+  | 'Running'
+  | 'Failed';
 
 interface TRun {
   id: TId;
@@ -89,6 +127,16 @@ interface TRun {
   workspaceId: TId;
   pipelineId: TId;
   userId: TId;
+  stack?: any;
+  pipeline?: any;
+  duration?: string;
+  owner?: any;
+  userName?: any;
+  user?: any;
+  creationDate?: any;
+  status?: string;
+  created: Date;
+  name?: string;
 }
 
 interface TBreadcrumb {

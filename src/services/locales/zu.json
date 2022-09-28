@@ -33,14 +33,39 @@
                 "label": "Full Name",
                 "placeholder": "John Doe"
               },
+              "username": {
+                "label": "Username",
+                "placeholder": "johndoe"
+              },
               "email": {
                 "label": "Email address",
                 "placeholder": "john.doe@acme.com"
+              },
+              "passwordChange": {
+                "currentPassword": {
+                  "label": "Current Password",
+                  "placeholder": "Current Password",
+                  "required": "Current Password Required"
+                },
+                "newPassword": {
+                  "label": "New Password",
+                  "placeholder": "New Password",
+                  "required": "New Password Required"
+                },
+                "confirmPassword": {
+                  "label": "Confirm Password",
+                  "placeholder": "Confirm Password",
+                  "required": "Confirm Password Required"
+                }
               }
             },
             "passwordReset": {
-              "label": "Password",
+              "label": "Change Password",
               "button": "Change Password"
+            },
+            "emailNameReset": {
+              "label": "Change Email and Username",
+              "button": "Change Email and Username"
             },
             "toasts": {
               "successful": {
@@ -49,7 +74,17 @@
               "failed": {
                 "text": "Something went wrong. Please try again."
               }
-            }
+            },
+            "popup": {
+                "title": "Change Email and Username",
+                "text": "Are you sure to change your email and username",
+                "successButton": {
+                  "text": "Yes"
+                },
+                "cancelButton": {
+                  "text": "No"
+                }
+              }
           },
           "BillingSettings": {
             "title": "Billing",
@@ -126,7 +161,7 @@
           },
           "OrganizationSettings": {
             "button": {
-              "text": "Invite  new Member"
+              "text": "New Invite"
             },
             "popup": {
               "title": "Add a new Member",
@@ -142,11 +177,33 @@
                 "required": "Role is required"
               },
               "button": {
-                "text": "Invite  new Member"
+                "text": "Invite"
+              },
+              "generateInviteModal": {
+                "title": "Invitation Token",
+                "text": "Click generate token to re-generate invitation for",
+                "button": {
+                  "text": "Generate Token"
+                }
               },
               "plus": {
                 "text": "Invite another user"
+              },
+              "invite": {
+                "text": "Invitation Token"
               }
+            },
+            "deleteMemberPopup": {
+              "title": "Are you sure?",
+              "text": "Do you want to revoke access for",
+              "successButton": {
+                "text": "Delete"
+              },
+              "cancelButton": {
+                "text": "Cancel"
+              },
+              "errorToaster": "Something went wrong!",
+              "successToaster": "Member deleted"
             },
             "deleteInvitePopup": {
               "title": "Are you sure?",
@@ -180,6 +237,9 @@
               "joinedAt": {
                 "text": "Joined"
               },
+              "createdAt": {
+                "text": "Created At"
+              },
               "sendAt": {
                 "text": "Send"
               }
@@ -190,25 +250,25 @@
           },
           "Dashboard": {
             "title": "Hello World!",
-            "subtitle": "Here are the first few steps to get you going with ZenML!",
+            "subtitle": "You can find your most important functions here on the dashboard.",
             "cardOne": {
-              "title": "Install client libraries: `pip install zenml`",
+              "title": "Read our documentation",
               "button": {
-                "text": "GitHub",
+                "text": "Read",
                 "href": "https://github.com/maiot-io/zenml"
               }
             },
             "cardTwo": {
-              "title": "Connect your cloud",
+              "title": "Change the settings",
               "button": {
-                "text": "Connect",
+                "text": "Manage",
                 "href": "https://docs.maiot.io/infrastructure/google-cloud-platform"
               }
             },
             "cardThree": {
-              "title": "Try out the quickstart to create your first pipeline",
+              "title": "Invite new members to your organization",
               "button": {
-                "text": "Create",
+                "text": "Invite",
                 "href": "https://docs.maiot.io/getting-started/quickstart"
               }
             }
@@ -225,20 +285,14 @@
               "pipelines": {
                 "text": "Pipelines"
               },
-              "workspaces": {
-                "text": "Workspaces"
+              "stacks": {
+                "text": "Stacks"
               },
-              "datasources": {
-                "text": "Datasources"
+              "stackComponents": {
+                "text": "Stack Components"
               },
-              "functions": {
-                "text": "Functions"
-              },
-              "models": {
-                "text": "Models"
-              },
-              "deployments": {
-                "text": "Deployments"
+              "setting": {
+                "text": "Setting"
               }
             }
           },
@@ -251,6 +305,11 @@
                 "placeholder": "john.doe@acme.com",
                 "required": "Email is required",
                 "invalidEmail": "Email is not valid"
+              },
+              "username": {
+                "label": "Username",
+                "placeholder": "username",
+                "required": "Username is required"
               },
               "password": {
                 "label": "Password",
@@ -278,22 +337,32 @@
             }
           },
           "Signup": {
-            "title": "Sign Up",
+            "title": "Register",
             "subtitle": "Enter your details below",
             "form": {
+              "username": {
+                "label": "username",
+                "placeholder": "username",
+                "required": "Username is required"
+              },
               "fullname": {
                 "label": "Fullname",
-                "placeholder": "Jane Doe",
+                "placeholder": "Full Name",
                 "required": "Fullname is required"
               },
               "email": {
                 "label": "Email address",
-                "placeholder": "jane.doe@acme.com",
+                "placeholder": "Email address",
                 "required": "Email is required",
                 "invalidEmail": "Email is not valid"
               },
               "password": {
                 "label": "Password",
+                "placeholder": "Password",
+                "required": "Password is required"
+              },
+              "confirmPassword": {
+                "label": "Confirm Password",
                 "placeholder": "Password",
                 "required": "Password is required"
               },
@@ -303,7 +372,7 @@
                 "required": "Organization is required"
               },
               "button": {
-                "text": "Sign Up"
+                "text": "Register"
               }
             },
             "login": {
@@ -312,7 +381,7 @@
             },
             "toasts": {
               "successfulSignup": {
-                "text": "Signed up successfully! Please verify your email before logging in."
+                "text": "Signed up successfully!"
               },
               "failedSignup": {
                 "text": "Incorrect credentials. Please try again."
@@ -389,9 +458,63 @@
               "text": "No runs."
             }
           },
+          "Stacks": {
+            "header": {
+              "breadcrumbs": {
+                "dashBoard": {
+                  "text": "Dashboard"
+                },
+                "stacks": {
+                  "text": "Stacks"
+                }
+              }
+            },
+            "tabs": {
+              "stacks": {
+                "text": "Stacks"
+              },
+              "allRuns": {
+                "text": "All Runs"
+              }
+            },
+            "emptyState": {
+              "text": "We are sorry! We could not find anything for your filter set. Please change your filters and try again."
+            },
+            "runsEmptyState": {
+              "text": "No runs."
+            }
+          },
           "AllRuns": {
             "emptyState": {
               "text": "We are sorry! We could not find anything for your filter set. Please change your filters and try again."
+            }
+          },
+          "StackDetail": {
+            "header": {
+              "breadcrumbs": {
+                "stacks": {
+                  "text": "Stacks"
+                }
+              }
+            },
+            "tabs": {
+              "configuration": {
+                "text": "Configuration"
+              },
+              "runs": {
+                "text": "Runs"
+              }
+            },
+            "emptyState": {
+              "text": "No runs."
+            },
+            "configuration": {
+              "title": {
+                "text": "YAML Configuration"
+              },
+              "button": {
+                "text": "Download"
+              }
             }
           },
           "PipelineDetail": {

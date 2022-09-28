@@ -31,15 +31,15 @@ export const useService = (): ServiceInterface => {
 
   useEffect(() => {
     const orderedPipelines = _.sortBy(pipelines, (pipeline: TPipeline) =>
-      new Date(pipeline.createdAt).getTime(),
+      new Date(pipeline.created).getTime(),
     ).reverse();
 
-    const filteredPipelines = orderedPipelines.filter(
-      (pipeline: TPipeline) =>
-        currentWorkspace && pipeline.workspaceId === currentWorkspace.id,
-    );
+    // const filteredPipelines = orderedPipelines.filter(
+    //   (pipeline: TPipeline) =>
+    //     currentWorkspace && pipeline.projectName === currentWorkspace.id,
+    // );
 
-    setFilteredPipelines(filteredPipelines);
+    setFilteredPipelines(orderedPipelines);
   }, []);
 
   const setSelectedRunIds = (runIds: TId[]) => {
