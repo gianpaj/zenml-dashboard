@@ -47,6 +47,10 @@ const Login: React.FC = () => {
               <Paragraph style={{ color: '#A1A4AB' }}>
                 {translate('subtitle')}
               </Paragraph>
+              {process.env.REACT_APP_DEMO_MODE && 
+              <Paragraph style={{ color: '#A1A4AB' }}>
+                {"Username is demo and password is demogorgon"}
+              </Paragraph>}
             </Box>
             <Form />
           </FlexBox.Column>
