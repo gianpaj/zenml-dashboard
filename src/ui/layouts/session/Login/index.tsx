@@ -48,8 +48,8 @@ const Login: React.FC = () => {
                 {translate('subtitle')}
               </Paragraph>
               {process.env.REACT_APP_DEMO_MODE && 
-              <Paragraph style={{ color: '#A1A4AB' }}>
-                {"Username is demo and password is demogorgon"}
+              <Paragraph size="body" style={{ color: '#A1A4AB', marginTop: '15px' }}>
+                {"Username and password is `" + process.env.REACT_APP_DEMO_MODE_USERNAME + "`"}
               </Paragraph>}
             </Box>
             <Form />

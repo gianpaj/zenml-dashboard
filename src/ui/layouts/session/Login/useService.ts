@@ -18,8 +18,8 @@ interface ServiceInterface {
 
 export const useService = (): ServiceInterface => {
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState(((process.env.REACT_APP_DEMO_MODE_USERNAME) ? process.env.REACT_APP_DEMO_MODE_USERNAME : ''));
+  const [password, setPassword] = useState(((process.env.REACT_APP_DEMO_MODE_PASSWORD) ? process.env.REACT_APP_DEMO_MODE_PASSWORD : ''));
   const [hasSubmittedWithErrors, setHasSubmittedWithErrors] = useState(false);
 
   const { push } = usePushRoute();
