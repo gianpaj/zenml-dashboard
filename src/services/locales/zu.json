@@ -245,26 +245,26 @@
           },
           "Dashboard": {
             "title": "Hi there! You are viewing the demo ZenML dashboard.",
-            "subtitle": "The ZenML team uses this dashboard to run pipelines internally. You have read-only access so feel free to click around and see the latest runs and stacks. To find out more, go to https://docs.zenml.io, or if you want one of your, get free access at https://zenml.io/cloud!.",
+            "subtitle": "The ZenML team uses this dashboard to run pipelines internally.",
             "cardOne": {
-              "title": "Read our documentation",
+              "title": "Understand more with our documentation",
               "button": {
                 "text": "Read",
                 "href": "https://docs.zenml.io"
               }
             },
             "cardTwo": {
-              "title": "Change the settings",
+              "title": "Get a free, managed ZenML instance",
               "button": {
-                "text": "Manage",
-                "href": "https://docs.zenml.io/infrastructure/google-cloud-platform"
+                "text": "Get",
+                "href": "https://zenml.io/cloud"
               }
             },
             "cardThree": {
-              "title": "Invite new members to your organization",
+              "title": "Run the ZenML quickstart",
               "button": {
-                "text": "Invite",
-                "href": "https://docs.zenml.io/getting-started/quickstart"
+                "text": "Code",
+                "href": "https://colab.research.google.com/github/zenml-io/zenml/blob/main/examples/quickstart/notebooks/quickstart.ipynb"
               }
             }
           },
