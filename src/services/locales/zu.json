@@ -244,8 +244,8 @@
             }
           },
           "Dashboard": {
-            "title": "Hi there!",
-            "subtitle": "You can find your most important functions here on the dashboard.",
+            "title": "Hi there! You are viewing the demo ZenML dashboard.",
+            "subtitle": "The ZenML team uses this dashboard to run pipelines internally. You have read-only access so feel free to click around and see the latest runs and stacks. To find out more, go to https://docs.zenml.io, or if you want one of your, get free access at https://zenml.io/cloud!.",
             "cardOne": {
               "title": "Read our documentation",
               "button": {
