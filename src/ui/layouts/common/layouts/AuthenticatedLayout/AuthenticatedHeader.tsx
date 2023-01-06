@@ -306,7 +306,7 @@ export const AuthenticatedHeader: React.FC<{
         </If>
       </FlexBox>
 
-      <CookieConsent
+      {/* <CookieConsent
         location="bottom"
         buttonText="I understand"
         cookieName="My Cookie"
@@ -344,8 +344,8 @@ export const AuthenticatedHeader: React.FC<{
         enableDeclineButton
         expires={120}
       >
-        ZenML uses cookies to enhance the user experience.
-      </CookieConsent>
+        ZenML uses cookies to enhance your user experience.
+      </CookieConsent> */}
     </>
   );
 };
