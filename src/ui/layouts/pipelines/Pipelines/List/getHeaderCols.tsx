@@ -2,10 +2,9 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { iconColors, iconSizes, ID_MAX_LENGTH } from '../../../../../constants';
 import {
-  formatDateToDisplay,
   truncate,
   getInitialsFromEmail,
-  formatDateToSort,
+  formatDateToDisplayOnTable,
 } from '../../../../../utils';
 import {
   Box,
@@ -55,7 +54,8 @@ export const GetHeaderCols = ({
     {
       width: '3%',
       renderRow: (pipeline: TPipeline) => (
-        <LinkBox
+        <LinkBox    
+          style={{ padding: 0 }}
           onClick={(e: Event) => {
             e.stopPropagation();
             if (openPipelineIds.indexOf(pipeline.id) === -1) {
@@ -67,8 +67,15 @@ export const GetHeaderCols = ({
             }
           }}
         >
-          <FlexBox justifyContent="center">
-            <icons.chevronDown color={iconColors.grey} size={iconSizes.sm} />
+          <FlexBox 
+            justifyContent="center" 
+            style={{ paddingTop: '5px', paddingBottom: '5px' }}
+          >
+            {openPipelineIds.indexOf(pipeline.id) === -1 ? (
+              <icons.rightArrow color={iconColors.grey} size={iconSizes.sm} />
+            ) : (
+              <icons.chevronDown color={iconColors.grey} size={iconSizes.sm} />
+            )}
           </FlexBox>
         </LinkBox>
       ),
@@ -248,23 +255,23 @@ export const GetHeaderCols = ({
       width: '8%',
       renderRow: (pipeline: TPipeline) => (
         <FlexBox alignItems="center">
-          <div data-tip data-for={formatDateToSort(pipeline.created)}>
+          <div data-tip data-for={formatDateToDisplayOnTable(pipeline.created)}>
             <FlexBox alignItems="center">
               <Box paddingRight="sm">
                 <icons.calendar color={iconColors.grey} size={iconSizes.sm} />
               </Box>
               <Paragraph color="grey" size="tiny">
-                {formatDateToDisplay(pipeline.created)}
+                {formatDateToDisplayOnTable(pipeline.created)}
               </Paragraph>
             </FlexBox>
           </div>
           <ReactTooltip
-            id={formatDateToSort(pipeline.created)}
+            id={formatDateToDisplayOnTable(pipeline.created)}
             place="top"
             effect="solid"
           >
             <Paragraph color="white">
-              {pipeline.created}
+              {formatDateToDisplayOnTable(pipeline.created)}
               {/* {translate(`tooltips.${invoice.status}`)} */}
             </Paragraph>
           </ReactTooltip>

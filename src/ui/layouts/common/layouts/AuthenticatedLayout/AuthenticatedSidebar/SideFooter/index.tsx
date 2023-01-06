@@ -31,6 +31,10 @@ export const SideFooter: React.FC = () => {
     }
   }, [authToken]);
 
+  // const url_string = window.location.href;
+  // const url = new URL(url_string);
+  // const projectName = url.searchParams.get('project');
+
   return (
     <>
       <Box marginHorizontal="md" paddingBottom="md">
@@ -38,11 +42,13 @@ export const SideFooter: React.FC = () => {
       </Box>
 
       <MenuItemExternal
+        id="documentation"
         Icon={() => <icons.docs color={iconColors.white} size={iconSizes.md} />}
         to="https://docs.zenml.io"
         text="Documentation"
       />
       <MenuItemExternal
+        id="example"
         Icon={() => (
           <icons.example color={iconColors.white} size={iconSizes.md} />
         )}
@@ -50,14 +56,18 @@ export const SideFooter: React.FC = () => {
         text="Example & Tutorials"
       />
       <MenuItemExternal
+        id="report"
         Icon={() => <icons.tool color={iconColors.white} size={iconSizes.md} />}
         to="https://github.com/zenml-io/zenml-dashboard/issues/new/choose"
         text="Report Issue"
       />
       <MenuItem
+        id="settings"
         Icon={() => (
           <icons.settings color={iconColors.white} size={iconSizes.md} />
         )}
+        innerItem={window.location.href?.includes('settings')}
+        isActive={() => window.location.href?.includes('settings')}
         to={routePaths.settings.personalDetails}
         text={translate('menu.setting.text')}
       />

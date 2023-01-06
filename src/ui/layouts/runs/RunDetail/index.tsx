@@ -11,13 +11,16 @@ import { Box, Paragraph } from '../../../components';
 
 import { RunStatus } from './components';
 
-import { formatDateForOverviewBar } from '../../../../utils';
-import { useHistory } from '../../../hooks';
+import { formatDateToDisplayOnTable } from '../../../../utils';
+import { useHistory, useSelector } from '../../../hooks';
+import { projectSelectors } from '../../../../redux/selectors';
 
 const getTabPages = ({
+  selectedProject,
   runId,
   fetching,
 }: {
+  selectedProject: string;
   runId: TId;
   fetching: boolean;
 }): TabPage[] => {
@@ -26,29 +29,35 @@ const getTabPages = ({
       text: 'DAG',
 
       Component: () => <DAG runId={runId} fetching={fetching} />,
-      path: routePaths.run.run.statistics(runId),
+      path: routePaths.run.run.statistics(selectedProject, runId),
     },
     {
       text: 'Configuration',
 
       Component: () => <Configuration runId={runId} />,
-      path: routePaths.run.run.results(runId),
+      path: routePaths.run.run.results(selectedProject, runId),
     },
   ];
 };
 
-const getBreadcrumbs = ({ runId }: { runId: TId }): TBreadcrumb[] => {
+const getBreadcrumbs = ({
+  runId,
+  selectedProject,
+}: {
+  runId: TId;
+  selectedProject: string;
+}): TBreadcrumb[] => {
   return [
     {
       name: 'Runs',
       clickable: true,
-      to: routePaths.pipelines.allRuns,
+      to: routePaths.pipelines.allRuns(selectedProject),
     },
 
     {
       name: `Run ${runId}`,
       clickable: true,
-      to: routePaths.run.run.statistics(runId),
+      to: routePaths.run.run.statistics(selectedProject, runId),
     },
   ];
 };
@@ -60,13 +69,15 @@ export interface RunDetailRouteParams {
 
 export const RunDetail: React.FC = () => {
   const { runId, run, fetching } = useService();
-
+  const selectedProject = useSelector(projectSelectors.selectedProject);
   const tabPages = getTabPages({
+    selectedProject,
     fetching,
     runId,
   });
   const breadcrumbs = getBreadcrumbs({
     runId,
+    selectedProject,
   });
 
   const boxStyle = {
@@ -110,7 +121,12 @@ export const RunDetail: React.FC = () => {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              history.push(routePaths.pipeline.configuration(run.pipeline?.id));
+              history.push(
+                routePaths.pipeline.configuration(
+                  run.pipeline?.id,
+                  selectedProject,
+                ),
+              );
             }}
           >
             {run.pipeline?.name}
@@ -144,7 +160,9 @@ export const RunDetail: React.FC = () => {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              history.push(routePaths.stack.configuration(run.stack?.id));
+              history.push(
+                routePaths.stack.configuration(run.stack?.id, selectedProject),
+              );
             }}
           >
             {run.stack?.name}
@@ -159,7 +177,7 @@ export const RunDetail: React.FC = () => {
         <Box>
           <Paragraph style={headStyle}>CREATED</Paragraph>
           <Paragraph style={{ color: '#515151', marginTop: '10px' }}>
-            {formatDateForOverviewBar(run.created)}
+            {formatDateToDisplayOnTable(run.created)}
           </Paragraph>
         </Box>
       </Box>

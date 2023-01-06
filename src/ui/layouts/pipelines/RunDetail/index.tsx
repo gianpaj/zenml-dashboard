@@ -12,14 +12,17 @@ import { Box, Paragraph } from '../../../components';
 
 import { RunStatus } from './components';
 
-import { formatDateForOverviewBar } from '../../../../utils';
-import { useHistory } from '../../../hooks';
+import { formatDateToDisplayOnTable } from '../../../../utils';
+import { useHistory, useSelector } from '../../../hooks';
+import { projectSelectors } from '../../../../redux/selectors';
 
 const getTabPages = ({
+  selectedProject,
   pipelineId,
   runId,
   fetching,
 }: {
+  selectedProject: string;
   pipelineId: TId;
   runId: TId;
   fetching: boolean;
@@ -29,21 +32,27 @@ const getTabPages = ({
       text: 'DAG',
 
       Component: () => <DAG runId={runId} fetching={fetching} />,
-      path: routePaths.run.pipeline.statistics(runId, pipelineId),
+      path: routePaths.run.pipeline.statistics(
+        selectedProject,
+        runId,
+        pipelineId,
+      ),
     },
     {
       text: 'Configuration',
 
       Component: () => <Configuration runId={runId} />,
-      path: routePaths.run.pipeline.results(runId, pipelineId),
+      path: routePaths.run.pipeline.results(selectedProject, runId, pipelineId),
     },
   ];
 };
 
 const getBreadcrumbs = ({
+  selectedProject,
   pipelineId,
   runId,
 }: {
+  selectedProject: string;
   pipelineId: TId;
   runId: TId;
 }): TBreadcrumb[] => {
@@ -51,17 +60,21 @@ const getBreadcrumbs = ({
     {
       name: translate('header.breadcrumbs.pipelines.text'),
       clickable: true,
-      to: routePaths.pipelines.list,
+      to: routePaths.pipelines.list(selectedProject),
     },
     {
       name: pipelineId,
       clickable: true,
-      to: routePaths.pipeline.configuration(pipelineId),
+      to: routePaths.pipeline.configuration(pipelineId, selectedProject),
     },
     {
       name: `Run ${runId}`,
       clickable: true,
-      to: routePaths.run.pipeline.statistics(runId, pipelineId),
+      to: routePaths.run.pipeline.statistics(
+        runId,
+        pipelineId,
+        selectedProject,
+      ),
     },
   ];
 };
@@ -73,7 +86,9 @@ export interface RunDetailRouteParams {
 
 export const RunDetail: React.FC = () => {
   const { runId, pipelineId, run, fetching } = useService();
+  const selectedProject = useSelector(projectSelectors.selectedProject);
   const tabPages = getTabPages({
+    selectedProject,
     runId,
     pipelineId,
     fetching,
@@ -81,6 +96,7 @@ export const RunDetail: React.FC = () => {
   const breadcrumbs = getBreadcrumbs({
     runId,
     pipelineId,
+    selectedProject,
   });
 
   const boxStyle = {
@@ -124,7 +140,12 @@ export const RunDetail: React.FC = () => {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              history.push(routePaths.pipeline.configuration(run.pipeline?.id));
+              history.push(
+                routePaths.pipeline.configuration(
+                  run.pipeline?.id,
+                  selectedProject,
+                ),
+              );
             }}
           >
             {run.pipeline?.name}
@@ -158,7 +179,9 @@ export const RunDetail: React.FC = () => {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              history.push(routePaths.stack.configuration(run.stack?.id));
+              history.push(
+                routePaths.stack.configuration(run.stack?.id, selectedProject),
+              );
             }}
           >
             {run.stack?.name}
@@ -173,7 +196,7 @@ export const RunDetail: React.FC = () => {
         <Box>
           <Paragraph style={headStyle}>CREATED</Paragraph>
           <Paragraph style={{ color: '#515151', marginTop: '10px' }}>
-            {formatDateForOverviewBar(run.created)}
+            {formatDateToDisplayOnTable(run.created)}
           </Paragraph>
         </Box>
       </Box>

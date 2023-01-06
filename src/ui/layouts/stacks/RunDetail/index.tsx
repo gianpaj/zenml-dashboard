@@ -8,30 +8,34 @@ import { DAG } from '../../../components/dag';
 
 import { Box, Paragraph } from '../../../components';
 import { RunStatus } from './components';
-import { formatDateForOverviewBar } from '../../../../utils';
+import { formatDateToDisplayOnTable } from '../../../../utils';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from '../../../hooks';
+import { projectSelectors } from '../../../../redux/selectors';
 
 const getTabPages = ({
   stackId,
   runId,
   fetching,
+  selectedProject,
 }: {
   stackId: TId;
   runId: TId;
   fetching: boolean;
+  selectedProject: string;
 }): TabPage[] => {
   return [
     {
       text: 'DAG',
 
       Component: () => <DAG runId={runId} fetching={fetching} />,
-      path: routePaths.run.stack.statistics(runId, stackId),
+      path: routePaths.run.stack.statistics(selectedProject, runId, stackId),
     },
     {
       text: 'Configuration',
 
       Component: () => <Configuration runId={runId} />,
-      path: routePaths.run.stack.results(runId, stackId),
+      path: routePaths.run.stack.results(selectedProject, runId, stackId),
     },
   ];
 };
@@ -39,25 +43,27 @@ const getTabPages = ({
 const getBreadcrumbs = ({
   stackId,
   runId,
+  selectedProject,
 }: {
   stackId: TId;
   runId: TId;
+  selectedProject: string;
 }): TBreadcrumb[] => {
   return [
     {
       name: 'Stacks',
       clickable: true,
-      to: routePaths.stacks.list,
+      to: routePaths.stacks.list(selectedProject),
     },
     {
       name: stackId,
       clickable: true,
-      to: routePaths.stack.configuration(stackId),
+      to: routePaths.stack.configuration(stackId, selectedProject),
     },
     {
       name: `Run ${runId}`,
       clickable: true,
-      to: routePaths.run.stack.statistics(runId, stackId),
+      to: routePaths.run.stack.statistics(runId, stackId, selectedProject),
     },
   ];
 };
@@ -70,14 +76,18 @@ export interface RunDetailRouteParams {
 export const RunDetail: React.FC = () => {
   const { runId, stackId, run, fetching } = useService();
   const history = useHistory();
+  const selectedProject = useSelector(projectSelectors.selectedProject);
+
   const tabPages = getTabPages({
     runId,
     stackId,
     fetching,
+    selectedProject,
   });
   const breadcrumbs = getBreadcrumbs({
     runId,
     stackId,
+    selectedProject,
   });
   const boxStyle = {
     backgroundColor: '#E9EAEC',
@@ -119,7 +129,12 @@ export const RunDetail: React.FC = () => {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              history.push(routePaths.pipeline.configuration(run.pipeline?.id));
+              history.push(
+                routePaths.pipeline.configuration(
+                  run.pipeline?.id,
+                  selectedProject,
+                ),
+              );
             }}
           >
             {run.pipeline?.name}
@@ -153,7 +168,9 @@ export const RunDetail: React.FC = () => {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              history.push(routePaths.stack.configuration(run.stack?.id));
+              history.push(
+                routePaths.stack.configuration(run.stack?.id, selectedProject),
+              );
             }}
           >
             {run.stack?.name}
@@ -168,7 +185,7 @@ export const RunDetail: React.FC = () => {
         <Box>
           <Paragraph style={headStyle}>CREATED</Paragraph>
           <Paragraph style={{ color: '#515151', marginTop: '10px' }}>
-            {formatDateForOverviewBar(run.created)}
+            {formatDateToDisplayOnTable(run.created)}
           </Paragraph>
         </Box>
       </Box>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Box, Paragraph } from '../../../components';
-import { formatDateForOverviewBar } from '../../../../utils';
+import { formatDateToDisplayOnTable } from '../../../../utils';
 import { routePaths } from '../../../../routes/routePaths';
 import { translate } from './translate';
 import { Configuration } from './Configuration';
@@ -11,7 +11,9 @@ import { useService } from './useService';
 import FilterComponent, {
   getInitialFilterStateForRuns,
 } from '../../../components/Filters';
-import { useLocationPath } from '../../../hooks';
+import { useLocationPath, useSelector } from '../../../hooks';
+import { projectSelectors } from '../../../../redux/selectors';
+import { DEFAULT_PROJECT_NAME } from '../../../../constants';
 
 interface Props {
   pipelineId: TId;
@@ -39,38 +41,47 @@ const FilterWrapperForRun = () => {
     >
       <Runs
         filter={getFilter(filters)}
-        pipelineId={locationPath.split('/')[2]}
+        pipelineId={locationPath.split('/')[4]}
       />
     </FilterComponent>
   );
 };
-const getTabPages = (pipelineId: TId): TabPage[] => {
+const getTabPages = (pipelineId: TId, selectedProject: string): TabPage[] => {
   return [
     {
       text: translate('tabs.configuration.text'),
       Component: () => <Configuration pipelineId={pipelineId} />,
-      path: routePaths.pipeline.configuration(pipelineId),
+      path: routePaths.pipeline.configuration(pipelineId, selectedProject),
     },
     {
       text: translate('tabs.runs.text'),
       Component: FilterWrapperForRun,
-
-      path: routePaths.pipeline.runs(pipelineId),
+      path: routePaths.pipeline.runs(selectedProject, pipelineId),
     },
   ];
 };
 
-const getBreadcrumbs = (pipelineId: TId): TBreadcrumb[] => {
+const url_string = window.location.href;
+const url = new URL(url_string);
+const projectName = url.searchParams.get('project');
+
+const getBreadcrumbs = (
+  pipelineId: TId,
+  selectedProject: string,
+): TBreadcrumb[] => {
   return [
     {
       name: translate('header.breadcrumbs.pipelines.text'),
       clickable: true,
-      to: routePaths.pipelines.list,
+      // to: routePaths.pipelines.list(selectedProject),
+      to:
+        routePaths.pipelines.base +
+        `?project=${projectName ? projectName : DEFAULT_PROJECT_NAME}`,
     },
     {
       name: pipelineId,
       clickable: true,
-      to: routePaths.pipeline.configuration(pipelineId),
+      to: routePaths.pipeline.configuration(pipelineId, selectedProject),
     },
   ];
 };
@@ -82,8 +93,9 @@ export interface PipelineDetailRouteParams {
 export const PipelineDetail: React.FC = () => {
   const { pipeline } = useService();
 
-  const tabPages = getTabPages(pipeline.id);
-  const breadcrumbs = getBreadcrumbs(pipeline.id);
+  const selectedProject = useSelector(projectSelectors.selectedProject);
+  const tabPages = getTabPages(pipeline.id, selectedProject);
+  const breadcrumbs = getBreadcrumbs(pipeline.id, selectedProject);
 
   const boxStyle = {
     backgroundColor: '#E9EAEC',
@@ -125,7 +137,7 @@ export const PipelineDetail: React.FC = () => {
         <Box>
           <Paragraph style={headStyle}>CREATED</Paragraph>
           <Paragraph style={{ color: '#515151', marginTop: '10px' }}>
-            {formatDateForOverviewBar(pipeline.created)}
+            {formatDateToDisplayOnTable(pipeline.created)}
           </Paragraph>
         </Box>
       </Box>

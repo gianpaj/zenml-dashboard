@@ -4,8 +4,7 @@ import React from 'react';
 import { iconColors, iconSizes, ID_MAX_LENGTH } from '../../../../../constants';
 import { translate } from '../translate';
 import {
-  formatDateToDisplay,
-  formatDateToSort,
+  formatDateToDisplayOnTable,
   getInitialsFromEmail,
   truncate,
 } from '../../../../../utils';
@@ -22,9 +21,10 @@ import { RunStatus } from '../RunStatus';
 import { SortingHeader } from '../SortingHeader';
 import { Sorting, SortingDirection } from '../types';
 import { useService } from './useService';
-import { useHistory } from '../../../../hooks';
+import { useHistory, useSelector } from '../../../../hooks';
 import { routePaths } from '../../../../../routes/routePaths';
 import ReactTooltip from 'react-tooltip';
+import { projectSelectors } from '../../../../../redux/selectors';
 
 export const useHeaderCols = ({
   runs,
@@ -52,7 +52,7 @@ export const useHeaderCols = ({
     runs,
   });
   const history = useHistory();
-
+  const selectedProject = useSelector(projectSelectors.selectedProject);
   return nestedRuns
     ? [
         {
@@ -199,7 +199,7 @@ export const useHeaderCols = ({
           width: '15%',
           renderRow: (run: any) => (
             <FlexBox style={{ alignItems: 'center' }}>
-              <div data-tip data-for={formatDateToSort(run.created)}>
+              <div data-tip data-for={formatDateToDisplayOnTable(run.created)}>
                 <FlexBox alignItems="center">
                   <Box paddingRight="sm">
                     <icons.calendar
@@ -208,17 +208,17 @@ export const useHeaderCols = ({
                     />
                   </Box>
                   <Paragraph color="grey" size="tiny">
-                    {formatDateToDisplay(run.created)}
+                    {formatDateToDisplayOnTable(run.created)}
                   </Paragraph>
                 </FlexBox>
               </div>
               <ReactTooltip
-                id={formatDateToSort(run.created)}
+                id={formatDateToDisplayOnTable(run.created)}
                 place="top"
                 effect="solid"
               >
                 <Paragraph color="white">
-                  {run.created}
+                  {formatDateToDisplayOnTable(run.created)}
                   {/* {translate(`tooltips.${invoice.status}`)} */}
                 </Paragraph>
               </ReactTooltip>
@@ -348,7 +348,10 @@ export const useHeaderCols = ({
                   onClick={(event) => {
                     event.stopPropagation();
                     history.push(
-                      routePaths.pipeline.configuration(run.pipeline?.id),
+                      routePaths.pipeline.configuration(
+                        run.pipeline?.id,
+                        selectedProject,
+                      ),
                     );
                   }}
                 >
@@ -422,7 +425,12 @@ export const useHeaderCols = ({
                   }}
                   onClick={(event) => {
                     event.stopPropagation();
-                    history.push(routePaths.stack.configuration(run.stack?.id));
+                    history.push(
+                      routePaths.stack.configuration(
+                        run.stack?.id,
+                        selectedProject,
+                      ),
+                    );
                   }}
                 >
                   {run.stack?.name}
@@ -529,7 +537,7 @@ export const useHeaderCols = ({
           width: '15%',
           renderRow: (run: TRun) => (
             <FlexBox alignItems="center">
-              <div data-tip data-for={formatDateToSort(run.created)}>
+              <div data-tip data-for={formatDateToDisplayOnTable(run.created)}>
                 <FlexBox alignItems="center">
                   <Box paddingRight="sm">
                     <icons.calendar
@@ -538,16 +546,16 @@ export const useHeaderCols = ({
                     />
                   </Box>
                   <Paragraph color="grey" size="tiny">
-                    {formatDateToDisplay(run.created)}
+                    {formatDateToDisplayOnTable(run.created)}
                   </Paragraph>
                 </FlexBox>
               </div>
               <ReactTooltip
-                id={formatDateToSort(run.created)}
+                id={formatDateToDisplayOnTable(run.created)}
                 place="top"
                 effect="solid"
               >
-                <Paragraph color="white">{run.created}</Paragraph>
+                <Paragraph color="white">{formatDateToDisplayOnTable(run.created)}</Paragraph>
               </ReactTooltip>
             </FlexBox>
           ),

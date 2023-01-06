@@ -2,40 +2,45 @@ import React from 'react';
 
 import { Box, Paragraph, icons } from '../../../components';
 import { iconColors, iconSizes } from '../../../../constants';
-import { formatDateToDisplay } from '../../../../utils';
+import { formatDateToDisplayOnTable } from '../../../../utils';
 import { routePaths } from '../../../../routes/routePaths';
 import { translate } from './translate';
 import { Configuration } from './Configuration';
 import { Runs } from './Runs';
 import { BasePage } from '../BasePage';
 import { useService } from './useService';
+import { useSelector } from '../../../hooks';
+import { projectSelectors } from '../../../../redux/selectors';
 
-const getTabPages = (stackId: TId): TabPage[] => {
+const getTabPages = (stackId: TId, selectedProject: string): TabPage[] => {
   return [
     {
       text: translate('tabs.configuration.text'),
       Component: () => <Configuration stackId={stackId} />,
-      path: routePaths.stack.configuration(stackId),
+      path: routePaths.stack.configuration(selectedProject, stackId),
     },
     {
       text: translate('tabs.runs.text'),
       Component: () => <Runs stackId={stackId} />,
-      path: routePaths.stack.runs(stackId),
+      path: routePaths.stack.runs(selectedProject, stackId),
     },
   ];
 };
 
-const getBreadcrumbs = (stackId: TId): TBreadcrumb[] => {
+const getBreadcrumbs = (
+  stackId: TId,
+  selectedProject: string,
+): TBreadcrumb[] => {
   return [
     {
       name: translate('header.breadcrumbs.stacks.text'),
       clickable: true,
-      to: routePaths.stacks.list,
+      to: routePaths.stacks.list(selectedProject),
     },
     {
       name: stackId,
       clickable: true,
-      to: routePaths.stack.configuration(stackId),
+      to: routePaths.stack.configuration(selectedProject, stackId),
     },
   ];
 };
@@ -46,9 +51,9 @@ export interface StackDetailRouteParams {
 
 export const StackDetail: React.FC = () => {
   const { stack } = useService();
-
-  const tabPages = getTabPages(stack.id);
-  const breadcrumbs = getBreadcrumbs(stack.id);
+  const selectedProject = useSelector(projectSelectors.selectedProject);
+  const tabPages = getTabPages(stack.id, selectedProject);
+  const breadcrumbs = getBreadcrumbs(stack.id, selectedProject);
 
   const boxStyle = {
     backgroundColor: '#E9EAEC',
@@ -103,7 +108,7 @@ export const StackDetail: React.FC = () => {
         <Box>
           <Paragraph style={headStyle}>Created</Paragraph>
           <Paragraph style={{ color: '#515151', marginTop: '10px' }}>
-            {formatDateToDisplay(stack.created)}
+            {formatDateToDisplayOnTable(stack.created)}
           </Paragraph>
         </Box>
       </Box>

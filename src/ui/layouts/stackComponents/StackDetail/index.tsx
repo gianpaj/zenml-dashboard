@@ -5,17 +5,18 @@ import { Box, Paragraph, icons } from '../../../components';
 import { iconColors, iconSizes } from '../../../../constants';
 import {
   camelCaseToParagraph,
-  formatDateForOverviewBar,
+  formatDateToDisplayOnTable,
 } from '../../../../utils';
 import { translate } from './translate';
 import { Configuration } from './Configuration';
 import { Runs } from './Runs';
 import { BasePage } from '../BasePage';
 import { useService } from './useService';
-import { useLocationPath } from '../../../hooks';
+import { useLocationPath, useSelector } from '../../../hooks';
 import FilterComponent, {
   getInitialFilterStateForRuns,
 } from '../../../components/Filters';
+import { projectSelectors } from '../../../../redux/selectors';
 
 const FilterWrapperForRun = () => {
   const locationPath = useLocationPath();
@@ -40,46 +41,60 @@ const FilterWrapperForRun = () => {
     >
       <Runs
         filter={getFilter(filters)}
-        stackComponentId={locationPath.split('/')[3]}
+        stackComponentId={locationPath.split('/')[5]}
       />
     </FilterComponent>
   );
 };
-const getTabPages = (stackId: TId, locationPath: any): TabPage[] => {
+const getTabPages = (
+  stackId: TId,
+  locationPath: any,
+  selectedProject: string,
+): TabPage[] => {
   return [
     {
       text: translate('tabs.configuration.text'),
       Component: () => <Configuration stackId={stackId} />,
       path: routePaths.stackComponents.configuration(
-        locationPath.split('/')[2],
+        locationPath.split('/')[4],
         stackId,
+        selectedProject,
       ),
     },
     {
       text: translate('tabs.runs.text'),
       Component: FilterWrapperForRun,
       path: routePaths.stackComponents.runs(
-        locationPath.split('/')[2],
+        locationPath.split('/')[4],
         stackId,
+        selectedProject,
       ),
     },
   ];
 };
 
-const getBreadcrumbs = (stackId: TId, locationPath: any): TBreadcrumb[] => {
+const getBreadcrumbs = (
+  stackId: TId,
+  locationPath: any,
+  selectedProject: string,
+): TBreadcrumb[] => {
   return [
     {
-      name: camelCaseToParagraph(locationPath.split('/')[2]),
+      name: camelCaseToParagraph(locationPath.split('/')[4]),
 
       clickable: true,
-      to: routePaths.stackComponents.base(locationPath.split('/')[2]),
+      to: routePaths.stackComponents.base(
+        locationPath.split('/')[4],
+        selectedProject,
+      ),
     },
     {
       name: stackId,
       clickable: true,
       to: routePaths.stackComponents.configuration(
-        camelCaseToParagraph(locationPath.split('/')[2]),
+        camelCaseToParagraph(locationPath.split('/')[4]),
         stackId,
+        selectedProject,
       ),
     },
   ];
@@ -92,9 +107,17 @@ export interface StackDetailRouteParams {
 export const StackDetail: React.FC = () => {
   const locationPath = useLocationPath();
   const { stackComponent } = useService();
-
-  const tabPages = getTabPages(stackComponent.id, locationPath);
-  const breadcrumbs = getBreadcrumbs(stackComponent.id, locationPath);
+  const selectedProject = useSelector(projectSelectors.selectedProject);
+  const tabPages = getTabPages(
+    stackComponent.id,
+    locationPath,
+    selectedProject,
+  );
+  const breadcrumbs = getBreadcrumbs(
+    stackComponent.id,
+    locationPath,
+    selectedProject,
+  );
 
   const boxStyle = {
     backgroundColor: '#E9EAEC',
@@ -111,7 +134,10 @@ export const StackDetail: React.FC = () => {
     <BasePage
       headerWithButtons
       tabPages={tabPages}
-      tabBasePath={routePaths.stackComponents.base(stackComponent.id)}
+      tabBasePath={routePaths.stackComponents.base(
+        stackComponent.id,
+        selectedProject,
+      )}
       breadcrumbs={breadcrumbs}
     >
       <Box style={boxStyle}>
@@ -154,7 +180,7 @@ export const StackDetail: React.FC = () => {
         <Box>
           <Paragraph style={headStyle}>Created</Paragraph>
           <Paragraph style={paraStyle}>
-            {formatDateForOverviewBar(stackComponent.created)}
+            {formatDateToDisplayOnTable(stackComponent.created)}
           </Paragraph>
         </Box>
       </Box>

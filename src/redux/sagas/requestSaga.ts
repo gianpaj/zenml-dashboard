@@ -7,7 +7,7 @@ import { showToasterAction } from '../actions';
 import { httpStatus } from '../../constants';
 import { actionTypesHandledByRequestSaga } from './actionTypesHandledByRequestSaga';
 
-const translate = getTranslateByScope('sagas.requestSaga');
+const translate = getTranslateByScope('Authentication error');
 
 export const isRequestAction = (action: any): boolean => {
   return actionTypesHandledByRequestSaga.includes(action.type);
@@ -26,7 +26,7 @@ function* logoutAndNotifyUserThatSessionExpired(): any {
   yield put(sessionActions.logout());
   yield put(
     showToasterAction({
-      description: translate('authenticationError'),
+      description: translate(''),
       type: toasterTypes.failure,
     }),
   );
@@ -55,9 +55,9 @@ function* callFailureCallback(action: any): any {
   }
 }
 
-function* callSuccessCallback(action: any): any {
+function* callSuccessCallback(action: any, response: any): any {
   if (action.payload.onSuccess) {
-    yield call(action.payload.onSuccess);
+    yield call(action.payload.onSuccess, response.data);
   }
 }
 
@@ -90,7 +90,7 @@ export function* handleRequestSaga(action: any) {
         requestParams: action.payload.params,
       });
 
-      yield* callSuccessCallback(action);
+      yield* callSuccessCallback(action, response);
     }
   } catch (e) {
     if (isUnauthenticatedError(e, action)) {

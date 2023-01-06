@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { iconColors, iconSizes, ID_MAX_LENGTH } from '../../../../../constants';
 import {
-  formatDateToDisplay,
   truncate,
   getInitialsFromEmail,
   formatDateToSort,
+  formatDateToDisplayOnTable,
 } from '../../../../../utils';
 import {
   Box,
@@ -48,12 +48,15 @@ export const GetHeaderCols = ({
     activeSortingDirection,
     filteredStacks,
   });
+
+  const [toggle, setToggle] = useState(false);
   return [
     {
       width: '3%',
       renderRow: (stack: TStack) => (
         <LinkBox
           onClick={(e: Event) => {
+            setToggle(!toggle);
             e.stopPropagation();
             if (openStackIds.indexOf(stack.id) === -1) {
               setOpenStackIds([...openStackIds, stack.id]);
@@ -64,8 +67,12 @@ export const GetHeaderCols = ({
             }
           }}
         >
-          <FlexBox justifyContent="center">
-            <icons.chevronDown color={iconColors.grey} size={iconSizes.sm} />
+          <FlexBox justifyContent="center" style={{ paddingTop: '5px', paddingBottom: '5px' }}>
+            {openStackIds.indexOf(stack.id) === -1 ? (
+              <icons.rightArrow color={iconColors.grey} size={iconSizes.sm} />
+            ) : (
+              <icons.chevronDown color={iconColors.grey} size={iconSizes.sm} />
+            )}
           </FlexBox>
         </LinkBox>
       ),
@@ -285,7 +292,7 @@ export const GetHeaderCols = ({
                 <icons.calendar color={iconColors.grey} size={iconSizes.sm} />
               </Box>
               <Paragraph color="grey" size="tiny">
-                {formatDateToDisplay(stack.created)}
+                {formatDateToDisplayOnTable(stack.created)}
               </Paragraph>
             </FlexBox>
           </div>
@@ -294,7 +301,7 @@ export const GetHeaderCols = ({
             place="top"
             effect="solid"
           >
-            <Paragraph color="white">{stack.created}</Paragraph>
+            <Paragraph color="white">{formatDateToDisplayOnTable(stack.created)}</Paragraph>
           </ReactTooltip>
         </FlexBox>
       ),
