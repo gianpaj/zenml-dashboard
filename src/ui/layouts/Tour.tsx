@@ -5,7 +5,7 @@ import JoyRide from "react-joyride";
 const TOUR_STEPS = [
     {
         target: "#pipelines",
-        content: "This is the pipelines",
+        content: "Click here to see all pipelines.",
     },
     {
         target: "#runs",

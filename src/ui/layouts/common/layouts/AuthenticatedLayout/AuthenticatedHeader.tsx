@@ -41,7 +41,7 @@ import { routePaths } from '../../../../../routes/routePaths';
 import cn from 'classnames';
 import css from './../../../../../ui/components/inputs/index.module.scss';
 import { ProjectPopup } from './ProjectPopup';
-import CookieConsent from 'react-cookie-consent';
+// import CookieConsent from 'react-cookie-consent';
 // import { endpoints } from '../../../../../api/endpoints';
 
 export const AuthenticatedHeader: React.FC<{
