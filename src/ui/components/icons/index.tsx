@@ -35,7 +35,7 @@ import { ReactComponent as Docs } from './assets/Docs.svg';
 import { ReactComponent as Example } from './assets/Example.svg';
 import { ReactComponent as Pipeline } from './assets/Pipeline.svg';
 import { ReactComponent as Stack } from './assets/Stack.svg';
-// import { ReactComponent as StackComponent } from './assets/StackComponent.svg';
+import { ReactComponent as StackComponent } from './assets/StackComponent.svg';
 import { ReactComponent as FunnelFill } from './assets/FunnelFill.svg';
 import { ReactComponent as Delete } from './assets/Delete.svg';
 import { ReactComponent as SimplePlus } from './assets/SimplePlus.svg';
@@ -43,9 +43,10 @@ import { ReactComponent as Inprogress } from './assets/InProgress.svg';
 import { ReactComponent as Cached } from './assets/Cached.svg';
 import { ReactComponent as RightArrow } from './assets/RightArrow.svg';
 import { ReactComponent as Edit } from './assets/Edit.svg';
+import { ReactComponent as Search } from './assets/Search.svg';
 
 //icons for stackComponents
-import { ReactComponent as PuzzlePiece } from './assets/PuzzlePiece.svg';
+// import { ReactComponent as PuzzlePiece } from './assets/PuzzlePiece.svg';
 import { ReactComponent as Folders } from './assets/Folders.svg';
 import { ReactComponent as BoundingBox } from './assets/BoundingBox.svg';
 import { ReactComponent as CloudArrowUp } from './assets/CloudArrowUp.svg';
@@ -56,10 +57,16 @@ import { ReactComponent as LockKey } from './assets/LockKey.svg';
 import { ReactComponent as Graph } from './assets/Graph.svg';
 import { ReactComponent as GitCommit } from './assets/GitCommit.svg';
 import { ReactComponent as ChatDots } from './assets/ChatDots.svg';
+import { ReactComponent as Run } from './assets/Run.svg';
 // import { ReactComponent as Inprogress } from './assets/InProgress.svg';
 // import { ReactComponent as Cached } from './assets/Cached.svg';
 // import { ReactComponent as RightArrow } from './assets/RightArrow.svg';
 // import { ReactComponent as Edit } from './assets/Edit.svg';
+
+import { ReactComponent as PaginationFirst } from './assets/PaginationFirst.svg';
+import { ReactComponent as PaginationLast } from './assets/PaginationLast.svg';
+import { ReactComponent as PaginationNext } from './assets/PaginationNext.svg';
+import { ReactComponent as PaginationPrev } from './assets/PaginationPrev.svg';
 
 import styles from './index.module.scss';
 import { joinClassNames } from '../../../utils/styles';
@@ -75,6 +82,7 @@ interface Props {
 const mapSizes = {
   xs: 12,
   sm: 18,
+  sml: 16,
   md: 24,
   lg: 30,
   xl: 36,
@@ -157,10 +165,12 @@ const icons = {
   example: createIcon({ Component: Example, useStroke: true }),
   pipeline: createIcon({ Component: Pipeline, useStroke: true }),
   stack: createIcon({ Component: Stack, useStroke: true }),
-  stackComponent: createIcon({ Component: PuzzlePiece, useStroke: true }),
+  stackComponent: createIcon({ Component: StackComponent, useStroke: true }),
   funnelFill: createIcon({ Component: FunnelFill }),
   delete: createIcon({ Component: Delete }),
   edit: createIcon({ Component: Edit }),
+  search: createIcon({ Component: Search }),
+  run: createIcon({ Component: Run, useStroke: true }),
 
   //icons for stackComponents
   artifact_store: createIcon({ Component: Folders, useStroke: true }),
@@ -177,6 +187,12 @@ const icons = {
     Component: ChartBarHorizontal,
     useStroke: true,
   }),
+
+  // paginations
+  paginationFirst: createIcon({ Component: PaginationFirst, useStroke: true }),
+  paginationLast: createIcon({ Component: PaginationLast, useStroke: true }),
+  paginationNext: createIcon({ Component: PaginationNext, useStroke: true }),
+  paginationPrev: createIcon({ Component: PaginationPrev, useStroke: true }),
 };
 
 export { icons };

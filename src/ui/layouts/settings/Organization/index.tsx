@@ -15,7 +15,10 @@ import { useMemberHeaderCols } from './useHeaderCols';
 import { InvitePopup } from './InvitePopup';
 import { useService } from './useService';
 import { rolesActions } from '../../../../redux/actions/roles';
-import { sessionSelectors } from '../../../../redux/selectors';
+import {
+  organizationSelectors,
+  sessionSelectors,
+} from '../../../../redux/selectors';
 import jwt_decode from 'jwt-decode';
 
 type Table = 'members' | 'invites';
@@ -29,7 +32,13 @@ export const Organization: React.FC = () => {
   const [fetchingMembers, setFetchingMembers] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [currentTable, setCurrentTable] = useState('members');
-
+  const ITEMS_PER_PAGE = parseInt(
+    process.env.REACT_APP_ITEMS_PER_PAGE as string,
+  );
+  const DEFAULT_ITEMS_PER_PAGE = 10;
+  const membersPaginated = useSelector(
+    organizationSelectors.myMembersPaginated,
+  );
   const {
     filteredMembers,
     setFilteredMembers,
@@ -48,17 +57,21 @@ export const Organization: React.FC = () => {
     activeSortingDirection,
     setActiveSortingDirection,
   });
-
+  // function name() {
+  //   console.log();
+  // }
   useEffect(() => {
     dispatch(rolesActions.getRoles({}));
     dispatch(
       organizationActions.getMembers({
+        page: 1,
+        size: ITEMS_PER_PAGE ? ITEMS_PER_PAGE : DEFAULT_ITEMS_PER_PAGE,
         onSuccess: () => setFetchingMembers(false),
         onFailure: () => setFetchingMembers(false),
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
-
 
   return (
     <>
@@ -89,6 +102,8 @@ export const Organization: React.FC = () => {
           </FlexBox.Row>
           {currentTable === 'members' && (
             <Table
+              activeSorting={activeSorting}
+              paginated={membersPaginated}
               pagination={true}
               headerCols={memberHeaderCols}
               loading={fetchingMembers}
@@ -102,3 +117,37 @@ export const Organization: React.FC = () => {
     </>
   );
 };
+
+// export const callActionForMembersForPagination = () => {
+//   const dispatch = useDispatch();
+//   const selectedProject = useSelector(projectSelectors.selectedProject);
+
+//   function dispatchPipelineData(
+//     page: number,
+//     size: number,
+//     filters?: any[],
+//     sortby?: string,
+//   ) {
+//     // let filtersParam: any = filterObjectForParam(filters);
+//     setFetchingForPipeline(true);
+//     // debugger;
+//     dispatch(
+//       organizationActions.getMembers({
+//         sort_by: sortby ? sortby : 'created',
+//         page: page,
+//         size: size,
+//         onSuccess: () => setFetchingMembers(false),
+//         onFailure: () => setFetchingMembers(false),
+//       }),
+//     );
+//   }
+
+//   const setFetchingForPipeline = (fetching: boolean) => {
+//     dispatch(pipelinePagesActions.setFetching({ fetching }));
+//   };
+
+//   return {
+//     setFetchingForPipeline,
+//     dispatchPipelineData,
+//   };
+// };

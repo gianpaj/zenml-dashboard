@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { routePaths } from '../../../../routes/routePaths';
 import { useHistory, useSelector } from '../../../hooks';
 
@@ -13,6 +13,8 @@ interface Props {
 }
 export const RunsTable: React.FC<{
   runIds: TId[];
+  getSorted?: any;
+  paginated?: any;
   pagination?: boolean;
   emptyStateText: string;
   fetching: boolean;
@@ -20,10 +22,12 @@ export const RunsTable: React.FC<{
   fromAllruns?: boolean;
   filter?: any;
 }> = ({
+  getSorted,
   runIds,
   pagination = true,
   emptyStateText,
   fetching,
+  paginated,
   pipelineRuns,
   fromAllruns,
   filter,
@@ -64,13 +68,27 @@ export const RunsTable: React.FC<{
     nestedRuns: pipelineRuns ? true : false,
   });
 
+  useEffect(() => {
+    if (getSorted) {
+      getSorted(activeSorting, activeSortingDirection);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getSorted]);
+
   return (
     <Table
+      activeSorting={
+        activeSorting !== 'created' && activeSortingDirection !== 'ASC'
+          ? activeSorting
+          : 'created'
+      }
       pagination={pagination}
       loading={fetching}
+      paginated={paginated}
       showHeader={true}
       headerCols={headerCols}
       tableRows={sortedRuns}
+      filters={filter}
       emptyState={{ text: emptyStateText }}
       trOnClick={openDetailPage}
     />

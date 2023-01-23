@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { routePaths } from '../../../../routes/routePaths';
 import { useHistory, useLocationPath, useSelector } from '../../../hooks';
 
@@ -9,12 +9,22 @@ import { useService } from './useService';
 import { projectSelectors } from '../../../../redux/selectors';
 
 export const RunsTable: React.FC<{
+  getSorted?: any;
   runIds: TId[];
+  paginated?: any;
   pagination?: boolean;
   emptyStateText: string;
   fetching: boolean;
   filter?: any;
-}> = ({ runIds, pagination = true, emptyStateText, fetching, filter }) => {
+}> = ({
+  getSorted,
+  runIds,
+  pagination = true,
+  paginated,
+  emptyStateText,
+  fetching,
+  filter,
+}) => {
   const history = useHistory();
   const locationPath = useLocationPath();
   const selectedProject = useSelector(projectSelectors.selectedProject);
@@ -50,11 +60,22 @@ export const RunsTable: React.FC<{
     setActiveSortingDirection,
   });
 
+  useEffect(() => {
+    getSorted(activeSorting, activeSortingDirection);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getSorted]);
   return (
     <Table
+      activeSorting={
+        activeSorting !== 'created' && activeSortingDirection !== 'ASC'
+          ? activeSorting
+          : 'created'
+      }
       pagination={pagination}
       loading={fetching}
       showHeader={true}
+      filters={filter}
+      paginated={paginated}
       headerCols={headerCols}
       tableRows={sortedRuns}
       emptyState={{ text: emptyStateText }}

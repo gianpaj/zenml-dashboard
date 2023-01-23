@@ -3,7 +3,6 @@ import ReactTooltip from 'react-tooltip';
 import { iconColors, iconSizes, ID_MAX_LENGTH } from '../../../../../constants';
 import {
   truncate,
-  getInitialsFromEmail,
   formatDateToDisplayOnTable,
 } from '../../../../../utils';
 import {
@@ -11,7 +10,6 @@ import {
   FlexBox,
   icons,
   LinkBox,
-  ColoredCircle,
   Paragraph,
 } from '../../../../components';
 import { HeaderCol } from '../../../common/Table';
@@ -54,7 +52,7 @@ export const GetHeaderCols = ({
     {
       width: '3%',
       renderRow: (pipeline: TPipeline) => (
-        <LinkBox    
+        <LinkBox
           style={{ padding: 0 }}
           onClick={(e: Event) => {
             e.stopPropagation();
@@ -67,14 +65,14 @@ export const GetHeaderCols = ({
             }
           }}
         >
-          <FlexBox 
-            justifyContent="center" 
+          <FlexBox
+            justifyContent="center"
             style={{ paddingTop: '5px', paddingBottom: '5px' }}
           >
             {openPipelineIds.indexOf(pipeline.id) === -1 ? (
-              <icons.rightArrow color={iconColors.grey} size={iconSizes.sm} />
+              <icons.chevronDownLight color={iconColors.grey} size={iconSizes.sm} />
             ) : (
-              <icons.chevronDown color={iconColors.grey} size={iconSizes.sm} />
+              <icons.chevronUpLight color={iconColors.grey} size={iconSizes.sm} />
             )}
           </FlexBox>
         </LinkBox>
@@ -161,8 +159,8 @@ export const GetHeaderCols = ({
     {
       render: () => (
         <SortingHeader
-          sorting="user.name"
-          sortMethod={sortMethod('user.name', {
+          sorting="user_id"
+          sortMethod={sortMethod('user_id', {
             asc: (filteredPipelines: TPipeline[]) =>
               _.orderBy(filteredPipelines, ['user.name'], ['asc']),
             desc: (filteredPipelines: TPipeline[]) =>
@@ -178,11 +176,6 @@ export const GetHeaderCols = ({
       ),
       width: '11%',
       renderRow: (pipeline: TPipeline) => {
-        const initials = getInitialsFromEmail(
-          pipeline.user.full_name
-            ? pipeline.user.full_name
-            : pipeline.user.name,
-        );
         return (
           <FlexBox alignItems="center">
             <div
@@ -194,11 +187,6 @@ export const GetHeaderCols = ({
               }
             >
               <FlexBox alignItems="center">
-                <Box paddingRight="sm">
-                  <ColoredCircle color="secondary" size="sm">
-                    {initials}
-                  </ColoredCircle>
-                </Box>
                 <Paragraph size="small">
                   {pipeline.user.full_name
                     ? pipeline.user.full_name
