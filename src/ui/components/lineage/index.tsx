@@ -15,6 +15,7 @@ import './index.css';
 import { Analysis, Data, Model, Schema, Service, Statistic } from './icons';
 import { useDispatch } from '../../hooks';
 import { runsActions } from '../../../redux/actions';
+import { FullWidthSpinner } from '../spinners';
 
 interface Edge {
   id: string;
@@ -116,7 +117,7 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
     initialNodes: layoutedNodes,
     initialEdges: layoutedEdges,
   } = getLayoutedElements(graph.graph.nodes, graph.graph.edges);
-
+  const [fetching, setFetching] = useState(false);
   // eslint-disable-next-line
   const [nodes, _, onNodesChange] = useNodesState(layoutedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
@@ -138,15 +139,20 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
+  if (fetching) {
+    return <FullWidthSpinner color="black" size="md" />;
+  }
   return (
     <>
       <div className="controls">
         <button
           onClick={() => {
+            setFetching(true);
             dispatch(
               runsActions.graphForRun({
                 runId: graph.runId,
+                onSuccess: () => setFetching(false),
+                onFailure: () => setFetching(false),
               }),
             );
           }}
@@ -155,6 +161,7 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
         </button>
         <button onClick={() => setLegend(!legend)}>Legend</button>
         <button
+          disabled={graph?.metadata[0]?.value ? false : true}
           onClick={() => {
             window.open(
               graph?.metadata[0]?.value
@@ -235,15 +242,13 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
               <div className="details">
                 <div className="detailsInfo">
                   <p className="detailsLabel">
-                    {selectedNode?.artifact_type
-                      ? 'Artifact ID'
-                      : 'Pipeline ID'}
+                    {selectedNode?.artifact_type ? 'Artifact ID' : 'Step ID'}
                   </p>
                   <p className="detailsP">{selectedNode?.execution_id}</p>
                   <p className="detailsLabel">
                     {selectedNode?.artifact_type
                       ? 'Artifact Name'
-                      : 'Pipeline Run Name'}
+                      : 'Step Name'}
                   </p>
                   <p className="detailsP">
                     {selectedNode?.artifact_type
@@ -266,7 +271,16 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
                       ? selectedNode?.artifact_data_type
                       : Object.entries(selectedNode?.inputs || {}).map(
                           (value) => {
-                            return value[0] + ': ' + value[1] + '\n';
+                            return (
+                              <div>
+                                <p className="detailsKey">
+                                  {String(value[0]) + ':'}
+                                </p>
+                                <p className="detailsValue">
+                                  {String(value[1])}
+                                </p>
+                              </div>
+                            );
                           },
                         )}
                   </p>
@@ -274,13 +288,41 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
                     {selectedNode?.artifact_type ? 'URI' : 'Outputs'}
                   </p>
                   <p className="detailsP URI">
-                    {selectedNode?.artifact_type
-                      ? selectedNode?.uri
-                      : Object.entries(selectedNode?.outputs || {}).map(
-                          (value) => {
-                            return value[0] + ': ' + value[1] + '\n';
-                          },
-                        )}
+                    {selectedNode?.artifact_type ? (
+                      <p className="detailsValue">{selectedNode?.uri}</p>
+                    ) : (
+                      Object.entries(selectedNode?.outputs || {}).map(
+                        (value) => {
+                          return (
+                            <div>
+                              <p className="detailsKey">
+                                {String(value[0]) + ':'}
+                              </p>
+                              <p className="detailsValue">{String(value[1])}</p>
+                            </div>
+                          );
+                        },
+                      )
+                    )}
+                  </p>
+                  <p className="detailsLabel">Metadata</p>
+                  <p className="detailsP URI">
+                    {Object.entries(selectedNode?.metadata || {}).map(
+                      (fullValue: [string, any]) => {
+                        let value = fullValue[1];
+                        return (
+                          <div>
+                            <p className="detailsKey">
+                              {String(value[0]).trim() + ' ('}{' '}
+                              {String(value[2]).trim() + ' ):'}
+                            </p>
+                            <p className="detailsValue">
+                              {String(value[1]).trim()}
+                            </p>
+                          </div>
+                        );
+                      },
+                    )}
                   </p>
                   <p className="detailsLabel">
                     {selectedNode?.artifact_type ? 'Is Cached?' : 'Params'}
@@ -292,7 +334,16 @@ export const LayoutFlow: React.FC<any> = (graph: any) => {
                         : 'No'
                       : Object.entries(selectedNode?.parameters || {}).map(
                           (value) => {
-                            return value[0] + ': ' + value[1] + '\n';
+                            return (
+                              <div>
+                                <p className="detailsKey">
+                                  {String(value[0]) + ':'}
+                                </p>
+                                <p className="detailsValue">
+                                  {String(value[1])}
+                                </p>
+                              </div>
+                            );
                           },
                         )}
                   </p>

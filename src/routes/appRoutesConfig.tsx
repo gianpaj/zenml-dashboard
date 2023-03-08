@@ -14,9 +14,12 @@ import Pipelines from '../ui/layouts/pipelines/Pipelines';
 import stacks from '../ui/layouts/stacks/Stacks';
 
 import stackComponents from '../ui/layouts/stackComponents/Stacks';
+import registerComponents from '../ui/layouts/stackComponents/RegisterComponents';
+import CreateStack from '../ui/layouts/stacks/CreateStack';
 import PipelineDetail from '../ui/layouts/pipelines/PipelineDetail/index';
 import StackDetail from '../ui/layouts/stacks/StackDetail/index';
 import stackComponentsDetail from '../ui/layouts/stackComponents/StackDetail/index';
+import ConfigureComponent from '../ui/layouts/stackComponents/ConfigureComponent/index';
 import PipelineRunDetail from '../ui/layouts/pipelines/RunDetail';
 import StacksRunDetail from '../ui/layouts/stacks/RunDetail';
 import RunsRunDetail from '../ui/layouts/runs/RunDetail';
@@ -128,6 +131,15 @@ const routes = [
   {
     path: routePaths.stacks.list(':string'),
     Component: stacks,
+    visibility: {
+      authentication: RouteVisibilityAuthentication.authenticatedOnly,
+    },
+    exact: true,
+  },
+
+  {
+    path: routePaths.stacks.createStack(':string'),
+    Component: CreateStack,
     visibility: {
       authentication: RouteVisibilityAuthentication.authenticatedOnly,
     },
@@ -309,6 +321,27 @@ const routes = [
   {
     path: routePaths.stackComponents.base(':type', ':string'),
     Component: stackComponents,
+    visibility: {
+      authentication: RouteVisibilityAuthentication.authenticatedOnly,
+    },
+    exact: true,
+  },
+
+  {
+    path: routePaths.stackComponents.registerComponents(':type', ':string'),
+    Component: registerComponents,
+    visibility: {
+      authentication: RouteVisibilityAuthentication.authenticatedOnly,
+    },
+    exact: true,
+  },
+  {
+    path: routePaths.stackComponents.configureComponent(
+      ':type',
+      ':string',
+      ':id',
+    ),
+    Component: ConfigureComponent,
     visibility: {
       authentication: RouteVisibilityAuthentication.authenticatedOnly,
     },

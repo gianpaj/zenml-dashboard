@@ -36,6 +36,7 @@ export type FieldError = {
 };
 
 export const FormTextField = (props: {
+  autoFocus?: any;
   label: string;
   labelColor?: any;
   placeholder: string;
@@ -44,12 +45,14 @@ export const FormTextField = (props: {
   error?: FieldError;
   disabled?: boolean;
   type?: string;
+  required?: string;
   name?: string;
   style?: any;
 }): JSX.Element => (
   <FlexBox.Column fullWidth>
     <FlexBox alignItems="center" fullWidth>
       <InputWithLabel
+        optional={props.required}
         name={props.name}
         label={props.label}
         labelColor={props.labelColor}
@@ -166,8 +169,46 @@ export const CopyField = (
   );
 };
 
+export const EditField = (
+  props: {
+    label: string;
+    labelColor: any;
+    placeholder: any;
+    value: string;
+    defaultValue?: string;
+    optional: boolean;
+  } & any,
+): JSX.Element => {
+  return (
+    <FlexBox.Column fullWidth>
+      <FlexBox alignItems="center" fullWidth style={{ position: 'relative' }}>
+        <InputWithLabel
+          name={props.name}
+          label={props.label}
+          optional={props.optional}
+          labelColor={props.labelColor}
+          InputComponent={
+            <TextInput
+              {...props}
+              defaultValue={props?.defaultValue}
+              value={props.value}
+              placeholder={props.placeholder}
+            />
+          }
+        />
+        {!props.disabled && (
+          <Box style={{ position: 'absolute', right: '10px', top: '35px' }}>
+            <icons.pen color={iconColors.grey} />
+          </Box>
+        )}
+      </FlexBox>
+    </FlexBox.Column>
+  );
+};
+
 export const SearchInputField = (
   props: {
+    fromRegisterComponent: boolean;
     label?: string;
     labelColor?: any;
     placeholder: any;
@@ -176,16 +217,32 @@ export const SearchInputField = (
   } & any,
 ): JSX.Element => {
   return (
-    <FlexBox.Column fullWidth style={{ height: '100px' }}>
+    <FlexBox.Column
+      fullWidth
+      style={{
+        height: props.fromRegisterComponent ? '50px' : '100px',
+        marginTop: '-10px',
+      }}
+    >
       <FlexBox alignItems="center" fullWidth style={{ position: 'relative' }}>
         <LinkBox
-          style={{ position: 'absolute', left: '7px', top: '30px' }}
+          style={{ position: 'absolute', left: '7px', top: '35px' }}
           onClick={() => {}}
         >
-          <icons.search color={iconColors.grey} />
+          <icons.search
+            style={{ position: 'relative', top: '-27px' }}
+            color={iconColors.grey}
+          />
         </LinkBox>
-
-        <InputWithLabel
+        <TextInput
+          type="search"
+          {...props}
+          style={{ paddingLeft: '40px' }}
+          value={props.value}
+          onChangeText={props.onChange}
+          placeholder={props.placeholder}
+        />
+        {/* <InputWithLabel
           name={props.name}
           label={props.label}
           labelColor={props.labelColor}
@@ -199,7 +256,7 @@ export const SearchInputField = (
               placeholder={props.placeholder}
             />
           }
-        />
+        /> */}
       </FlexBox>
     </FlexBox.Column>
   );
