@@ -54,7 +54,9 @@ const HeaderWithButtons: React.FC<{
         {renderRight && renderRight()}
       </Box>
       <CreatePipelineButton />
-
+{
+  console.log('hi')
+}
       <DocumentationLink
         text={constantCommandsToCreatePipeline.documentation}
       />
