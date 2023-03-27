@@ -15,7 +15,7 @@ import {
 } from '../../../redux/selectors';
 import { stackComponentsActions } from '../../../redux/actions';
 
-const Component = () => {
+const Component = (props: any) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const selectedWorkspace = useSelector(workspaceSelectors.selectedWorkspace);
@@ -43,7 +43,13 @@ const Component = () => {
 
   const selectSection = (item: any) => {
     setSelectedComp(item);
-    history.push(routePaths.stackComponents.base(item, selectedWorkspace));
+    if (props?.fromRegisterComponent) {
+      history.push(
+        routePaths.stackComponents.registerComponents(item, selectedWorkspace),
+      );
+    } else {
+      history.push(routePaths.stackComponents.base(item, selectedWorkspace));
+    }
   };
 
   //   const stacks = stackComponentsTypes?.filter((e) => {
@@ -76,9 +82,14 @@ const Component = () => {
   return (
     <Box
       style={{
+        height: '75%',
+        width: '20%',
+        overflow: 'hidden',
+        scrollBehavior: 'smooth',
+        overflowY: 'scroll',
         borderRight: '1px solid #A8A8A8',
         padding: '0 50px 0 33px',
-        marginTop: '12rem',
+        marginTop: '10rem',
       }}
     >
       {/* <Box style={{ marginTop: '-22px' }}>
@@ -89,7 +100,39 @@ const Component = () => {
         />
       </Box> */}
 
-      <Box style={{ marginTop: '-20px' }}>
+      <Box style={{}}>
+        {/* {props?.fromRegisterComponent && (
+          <FlexBox
+            onClick={() => selectSection('all_components')}
+            style={{
+              ...sectionStyle,
+              backgroundColor: formatSectionColor('all_components'),
+            }}
+            marginTop="sm"
+          >
+            <Box>
+              <icons.stackComponent
+                color={
+                  selectedComp === 'all_components'
+                    ? iconColors.white
+                    : iconColors.primary
+                }
+                size={iconSizes.md}
+              />
+            </Box>
+            <Box>
+              <Paragraph
+                style={{
+                  color: formatTextColor('all_components'),
+                  ...textStyle,
+                }}
+              >
+                {formatText('all_components')}
+              </Paragraph>
+            </Box>
+          </FlexBox>
+        )} */}
+
         {stackComponentsTypes?.map((item: any, index: number) => (
           <Box key={index}>
             {item === 'artifact_store' && (
@@ -324,7 +367,7 @@ const Component = () => {
                   ...sectionStyle,
                   background: formatSectionColor(item),
                 }}
-                marginTop="sm"
+                // marginTop="sm"
               >
                 <Box>
                   <icons.orchestrator
@@ -401,6 +444,34 @@ const Component = () => {
                 </Box>
               </FlexBox>
             )}
+            {item === 'model_registry' && (
+              <FlexBox
+                onClick={() => selectSection(item)}
+                style={{
+                  ...sectionStyle,
+                  background: formatSectionColor(item),
+                }}
+                marginTop="sm"
+              >
+                <Box>
+                  <icons.model_registry
+                    color={
+                      selectedComp === item
+                        ? iconColors.white
+                        : iconColors.primary
+                    }
+                    size={iconSizes.md}
+                  />
+                </Box>
+                <Box>
+                  <Paragraph
+                    style={{ color: formatTextColor(item), ...textStyle }}
+                  >
+                    {formatText(item)}
+                  </Paragraph>
+                </Box>
+              </FlexBox>
+            )}
             {item === 'image_builder' && (
               <FlexBox
                 onClick={() => selectSection(item)}
@@ -442,7 +513,8 @@ const Component = () => {
               item !== 'annotator' &&
               item !== 'alerter' &&
               item !== 'image_builder' &&
-              item !== 'artifact_store' && (
+              item !== 'artifact_store' &&
+              item !== 'model_registry' && (
                 <FlexBox
                   onClick={() => selectSection(item)}
                   style={{
