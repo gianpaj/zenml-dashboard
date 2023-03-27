@@ -10,6 +10,7 @@ import Pipelines from './Pipelines';
 
 export const BasePage: React.FC<{
   tabPages: TabPage[];
+  title?: string;
   breadcrumbs: TBreadcrumb[];
   tabBasePath: string;
   renderHeaderRight?: () => JSX.Element;
@@ -18,17 +19,20 @@ export const BasePage: React.FC<{
   tabPages,
   breadcrumbs,
   tabBasePath,
+  title,
   renderHeaderRight,
   headerWithButtons,
   children,
 }) => {
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout breadcrumb={[...breadcrumbs]}>
       <SidebarContainer>
+        {console.log(breadcrumbs, '')}
         <IfElse
           condition={!!headerWithButtons}
           renderWhenTrue={() => (
             <Header.HeaderWithButtons
+              title={title}
               breadcrumbs={[...breadcrumbs]}
               renderRight={renderHeaderRight}
             />

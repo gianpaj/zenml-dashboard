@@ -1,14 +1,11 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { FlexBox, Box } from '../../../components';
-import { Breadcrumbs } from '../../common/Breadcrumbs';
-
-import { CreateStackButton } from './CreateStackButton';
-import { DocumentationLink } from './DocumentationLink';
+import { FlexBox, Box, Paragraph } from '../../../components';
 
 import styles from './index.module.scss';
 import { constantCommandsToCreateStack } from '../../../../constants/constantCommands';
+import { title } from 'process';
 
 const DefaultHeader: React.FC<{
   breadcrumbs: TBreadcrumb[];
@@ -16,33 +13,62 @@ const DefaultHeader: React.FC<{
 }> = ({ breadcrumbs, renderRight }) => (
   <FlexBox
     marginTop="xl"
-    marginBottom="lg"
+    // marginBottom="lg"
     alignItems="center"
     justifyContent="space-between"
     className={cn(styles.header, 'd-none d-md-block')}
   >
     <FlexBox fullHeight alignItems="center">
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <Paragraph
+        style={{
+          fontSize: '42px',
+          fontWeight: 'bold',
+          lineHeight: '48px',
+          color: '#424240',
+        }}
+      >
+        {breadcrumbs[0]?.name}
+      </Paragraph>
     </FlexBox>
     <FlexBox alignItems="center">
-      <Box marginRight="lg">{renderRight && renderRight()}</Box>
+      <Paragraph
+        style={{ fontSize: '14px', lineHeight: '17px', color: '#828282', marginTop: '20px' }}
+      >
+        Check out our easy to read{' '}
+        <a
+          style={{ color: '#443E99' }}
+          href={constantCommandsToCreateStack.documentation}
+          target="__blank"
+        >
+          document
+        </a>
+      </Paragraph>
     </FlexBox>
   </FlexBox>
 );
 
 const HeaderWithButtons: React.FC<{
   breadcrumbs: TBreadcrumb[];
+  title?: string;
   renderRight?: () => JSX.Element;
-}> = ({ breadcrumbs, renderRight }) => (
+}> = ({ breadcrumbs, renderRight, title }) => (
   <FlexBox
-    marginTop="xl"
-    marginBottom="lg"
     alignItems="center"
     justifyContent="space-between"
     className={styles.header}
   >
     <FlexBox className="d-none d-md-flex">
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <Paragraph
+        style={{
+          fontSize: '42px',
+          fontWeight: 'bold',
+          lineHeight: '48px',
+          color: '#424240',
+        }}
+      >
+        {title}
+        {/* {breadcrumbs[0]?.name} */}
+      </Paragraph>
     </FlexBox>
     <FlexBox
       alignItems="center"
@@ -50,12 +76,23 @@ const HeaderWithButtons: React.FC<{
       justifyContent="flex-end"
       className={styles.rightWrapper}
     >
-      <Box marginRight="lg" className={styles.dynamicHeaderRight}>
-        {renderRight && renderRight()}
+      <Box className={styles.dynamicHeaderRight}>
+        <Paragraph
+          style={{ fontSize: '14px', lineHeight: '17px', color: '#828282', marginTop: '20px' }}
+        >
+          Check out our easy to read{' '}
+          <a
+            style={{ color: '#443E99' }}
+            href={constantCommandsToCreateStack.documentation}
+            target="__blank"
+          >
+            document
+          </a>
+        </Paragraph>
       </Box>
-      <CreateStackButton />
+      {/* <CreateStackButton />
 
-      <DocumentationLink text={constantCommandsToCreateStack.documentation} />
+      <DocumentationLink text={constantCommandsToCreateStack.documentation} /> */}
     </FlexBox>
   </FlexBox>
 );

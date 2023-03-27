@@ -6,7 +6,7 @@ import { iconColors, iconSizes, ID_MAX_LENGTH } from '../../../../../constants';
 import { useHistory, useSelector } from '../../../../hooks';
 import { routePaths } from '../../../../../routes/routePaths';
 import { truncate, formatDateToDisplayOnTable } from '../../../../../utils';
-import { FlexBox, Paragraph, Box, icons } from '../../../../components';
+import { FlexBox, Paragraph, icons } from '../../../../components';
 import { HeaderCol } from '../../../common/Table';
 import { RunStatus } from '../RunStatus';
 
@@ -64,13 +64,13 @@ export const useHeaderCols = ({
           <Paragraph
             size="small"
             color="black"
-            style={{ fontSize: '12px', marginLeft: '33px' }}
+            style={{ fontSize: '14px', marginLeft: '33px' }}
           >
             RUN ID
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '20%',
       renderRow: (run: TRun) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={run.id}>
@@ -106,12 +106,12 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             RUN NAME
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '30%',
       renderRow: (run: TRun) => (
         <div style={{ alignItems: 'center' }}>
           <div data-tip data-for={run.name}>
@@ -135,12 +135,12 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             PIPELINE
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={run.pipeline?.name && run.pipeline?.version}>
@@ -190,13 +190,17 @@ export const useHeaderCols = ({
           activeSortingDirection={activeSortingDirection}
         >
           <div style={{ margin: '0 auto 0 auto' }}>
-            <Paragraph size="small" color="black" style={{ fontSize: '12px', marginLeft: '-24px' }}>
+            <Paragraph
+              size="small"
+              color="black"
+              style={{ fontSize: '14px', marginLeft: '-24px' }}
+            >
               STATUS
             </Paragraph>
           </div>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => <RunStatus run={run} />,
     },
 
@@ -212,12 +216,12 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             STACK NAME
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={run.stack?.name}>
@@ -259,32 +263,36 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             AUTHOR
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => {
         return (
           <FlexBox alignItems="center">
             <div
               data-tip
-              data-for={run.user.full_name ? run.user.full_name : run.user.name}
+              data-for={
+                run?.user?.full_name ? run?.user?.full_name : run?.user?.name
+              }
             >
               <FlexBox alignItems="center">
                 <Paragraph size="small">
-                  {run.user.full_name ? run.user.full_name : run.user.name}
+                  {run?.user?.full_name
+                    ? run?.user?.full_name
+                    : run?.user?.name}
                 </Paragraph>
               </FlexBox>
             </div>
             <ReactTooltip
-              id={run.user.full_name ? run.user.full_name : run.user.name}
+              id={run?.user?.full_name ? run?.user?.full_name : run?.user?.name}
               place="top"
               effect="solid"
             >
               <Paragraph color="white">
-                {run.user.full_name ? run.user.full_name : run.user.name}
+                {run?.user?.full_name ? run?.user?.full_name : run?.user?.name}
               </Paragraph>
             </ReactTooltip>
           </FlexBox>
@@ -309,19 +317,19 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             CREATED AT
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '20%',
       renderRow: (run: TRun) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={formatDateToDisplayOnTable(run.created)}>
             <FlexBox alignItems="center">
-              <Box paddingRight="sm">
+              {/* <Box paddingRight="sm">
                 <icons.calendar color={iconColors.grey} size={iconSizes.sm} />
-              </Box>
+              </Box> */}
               <Paragraph color="grey" size="tiny">
                 {formatDateToDisplayOnTable(run.created)}
               </Paragraph>

@@ -68,13 +68,13 @@ export const GetHeaderCols = ({
           <Paragraph
             size="small"
             color="black"
-            style={{ fontSize: '12px', marginLeft: '25px' }}
+            style={{ fontSize: '14px', marginLeft: '25px' }}
           >
             ID
           </Paragraph>
         </SortingHeader>
       ),
-      width: '15%',
+      width: '20%',
       renderRow: (stackComponent: TStack) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={stackComponent.id}>
@@ -112,12 +112,12 @@ export const GetHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             NAME
           </Paragraph>
         </SortingHeader>
       ),
-      width: '15%',
+      width: '30%',
       renderRow: (stackComponent: TStack) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={stackComponent.name}>
@@ -146,13 +146,17 @@ export const GetHeaderCols = ({
           activeSortingDirection={activeSortingDirection}
         >
           <div style={{ margin: '0 auto 0 auto', textAlign: 'center' }}>
-            <Paragraph size="small" color="black" style={{ fontSize: '12px', marginLeft: '-24px' }}>
+            <Paragraph
+              size="small"
+              color="black"
+              style={{ fontSize: '14px', marginLeft: '-24px' }}
+            >
               FLAVOR
             </Paragraph>
           </div>
         </SortingHeader>
       ),
-      width: '15%',
+      width: '10%',
       renderRow: (stackComponent: TStack) => (
         <FlexBox alignItems="center" style={{ marginLeft: '-24px' }}>
           <div
@@ -161,8 +165,8 @@ export const GetHeaderCols = ({
             style={{ margin: ' 0 auto 0 auto' }}
           >
             <img
-              alt={stackComponent.flavor.logoUrl}
-              src={stackComponent.flavor.logoUrl}
+              alt={stackComponent?.flavor?.logoUrl}
+              src={stackComponent?.flavor?.logoUrl}
               style={{
                 height: '28px',
                 width: '28px',
@@ -179,7 +183,7 @@ export const GetHeaderCols = ({
             place="top"
             effect="solid"
           >
-            <Paragraph color="white">{stackComponent.flavor.name}</Paragraph>
+            <Paragraph color="white">{stackComponent?.flavor?.name}</Paragraph>
           </ReactTooltip>
         </FlexBox>
       ),
@@ -199,13 +203,17 @@ export const GetHeaderCols = ({
           activeSortingDirection={activeSortingDirection}
         >
           <div style={{ margin: '0 auto 0 auto', textAlign: 'center' }}>
-            <Paragraph size="small" color="black" style={{ fontSize: '12px', marginLeft: '-24px' }}>
+            <Paragraph
+              size="small"
+              color="black"
+              style={{ fontSize: '14px', marginLeft: '-24px' }}
+            >
               SHARED
             </Paragraph>
           </div>
         </SortingHeader>
       ),
-      width: '15%',
+      width: '10%',
       renderRow: (stackComponent: TStack) => (
         <FlexBox alignItems="center" style={{ marginLeft: '-24px' }}>
           <div
@@ -263,12 +271,12 @@ export const GetHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             AUTHOR
           </Paragraph>
         </SortingHeader>
       ),
-      width: '15%',
+      width: '10%',
       renderRow: (stackComponent: TStack) => {
         return (
           <FlexBox alignItems="center">
@@ -329,19 +337,19 @@ export const GetHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black" style={{ fontSize: '12px' }}>
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             CREATED AT
           </Paragraph>
         </SortingHeader>
       ),
-      width: '15%',
+      width: '20%',
       renderRow: (stackComponent: TStack) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={formatDateToSort(stackComponent.created)}>
             <FlexBox alignItems="center">
-              <Box paddingRight="sm">
+              {/* <Box paddingRight="sm">
                 <icons.calendar color={iconColors.grey} size={iconSizes.sm} />
-              </Box>
+              </Box> */}
               <Paragraph color="grey" size="tiny">
                 {formatDateToDisplayOnTable(stackComponent.created)}
               </Paragraph>

@@ -63,7 +63,7 @@ export const useHeaderCols = ({
         //       <Paragraph
         //         size="small"
         //         color="grey"
-        //         style={{ fontSize: '12px' }}
+        //         style={{ fontSize: '14px' }}
         //       ></Paragraph>
         //     </FlexBox>
         //   ),
@@ -85,7 +85,7 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px', marginLeft: '30px' }}
+                style={{ fontSize: '14px', marginLeft: '30px' }}
               >
                 RUN ID
               </Paragraph>
@@ -135,7 +135,7 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 RUN NAME
               </Paragraph>
@@ -173,7 +173,7 @@ export const useHeaderCols = ({
                 <Paragraph
                   size="small"
                   color="black"
-                  style={{ fontSize: '12px', marginLeft: '-24px' }}
+                  style={{ fontSize: '14px', marginLeft: '-24px' }}
                 >
                   STATUS
                 </Paragraph>
@@ -210,7 +210,7 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 CREATED
               </Paragraph>
@@ -253,7 +253,7 @@ export const useHeaderCols = ({
         //       <Paragraph
         //         size="small"
         //         color="grey"
-        //         style={{ fontSize: '12px' }}
+        //         style={{ fontSize: '14px' }}
         //       ></Paragraph>
         //     </FlexBox>
         //   ),
@@ -275,13 +275,13 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px', marginLeft: '30px' }}
+                style={{ fontSize: '14px', marginLeft: '30px' }}
               >
                 RUN ID
               </Paragraph>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '20%',
           renderRow: (run: TRun) => (
             <FlexBox alignItems="center">
               <div data-tip data-for={run?.id}>
@@ -325,13 +325,13 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 RUN NAME
               </Paragraph>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '30%',
           renderRow: (run: TRun) => (
             <div style={{ alignItems: 'center' }}>
               <div data-tip data-for={run?.name}>
@@ -362,13 +362,13 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 PIPELINE
               </Paragraph>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '7.5%',
           renderRow: (run: TRun) => (
             <FlexBox alignItems="center">
               <div
@@ -425,14 +425,14 @@ export const useHeaderCols = ({
                 <Paragraph
                   size="small"
                   color="black"
-                  style={{ fontSize: '12px', marginLeft: '-24px' }}
+                  style={{ fontSize: '14px', marginLeft: '-24px' }}
                 >
                   STATUS
                 </Paragraph>
               </div>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '7.5%',
 
           renderRow: (run: TRun) => <RunStatus run={run} />,
         },
@@ -451,13 +451,13 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 STACK NAME
               </Paragraph>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '7.5%',
           renderRow: (run: TRun) => (
             <FlexBox alignItems="center">
               <div data-tip data-for={run?.stack?.name}>
@@ -506,13 +506,13 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 {translate('author.text')}
               </Paragraph>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '7.5%',
           renderRow: (run: TRun) => {
             const initials = getInitialsFromEmail(
               run?.user.full_name ? run?.user.full_name : run?.user.name,
@@ -579,23 +579,23 @@ export const useHeaderCols = ({
               <Paragraph
                 size="small"
                 color="black"
-                style={{ fontSize: '12px' }}
+                style={{ fontSize: '14px' }}
               >
                 {translate('createdAt.text')}
               </Paragraph>
             </SortingHeader>
           ),
-          width: '15%',
+          width: '20%',
           renderRow: (run: TRun) => (
             <FlexBox alignItems="center">
               <div data-tip data-for={formatDateToDisplayOnTable(run?.created)}>
                 <FlexBox alignItems="center">
-                  <Box paddingRight="sm">
+                  {/* <Box paddingRight="sm">
                     <icons.calendar
                       color={iconColors.grey}
                       size={iconSizes.sm}
                     />
-                  </Box>
+                  </Box> */}
                   <Paragraph color="grey" size="tiny">
                     {formatDateToDisplayOnTable(run?.created)}
                   </Paragraph>

@@ -6,7 +6,7 @@ import { routePaths } from '../../../../../../routes/routePaths';
 
 import {
   Box,
-  ColoredCircle,
+  // ColoredCircle,
   FlexBox,
   icons,
   If,
@@ -18,16 +18,16 @@ import { workspaceSelectors } from '../../../../../../redux/selectors';
 
 export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
   const { lastThreeRuns } = useService({ pipeline });
-  
+
   const history = useHistory();
   const selectedWorkspace = useSelector(workspaceSelectors.selectedWorkspace);
   return (
-    <FlexBox alignItems="center" style={{ marginLeft: '30%' }}>
+    <FlexBox alignItems="center" justifyContent='center' style={{ marginLeft: '-16px' }}>
       {lastThreeRuns.map((item: any, index: number) => (
-        <Box key={index} paddingHorizontal="xs">
+        <Box key={index} >
           <>
-            <FlexBox alignItems="center" >
-              <div data-tip data-for={item.status} >
+            <FlexBox alignItems="center">
+              <div data-tip data-for={item.status}>
                 <If condition={item.status === runStatus.COMPLETED}>
                   {() => (
                     <div
@@ -42,12 +42,12 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
                         );
                       }}
                     >
-                      <ColoredCircle color="green" size="xs">
-                        <icons.check
-                          color={iconColors.white}
-                          size={iconSizes.xs}
-                        />
-                      </ColoredCircle>
+                      {/* <ColoredCircle color="green" size="xs"> */}
+                      <icons.circleCheck
+                        color={iconColors.lightGreen}
+                        size={iconSizes.md}
+                      />
+                      {/* </ColoredCircle> */}
                     </div>
                   )}
                 </If>
@@ -56,9 +56,9 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
                 <Paragraph color="white">{item.status}</Paragraph>
               </ReactTooltip>
             </FlexBox>
-
-            <FlexBox alignItems="center" >
-              <div data-tip data-for={item.status} >
+       
+            <FlexBox alignItems="center">
+              <div data-tip data-for={item.status}>
                 <If condition={item.status === runStatus.RUNNING}>
                   {() => (
                     <div
@@ -73,12 +73,12 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
                         );
                       }}
                     >
-                      <ColoredCircle color="secondary" size="xs">
-                        <icons.inProgress
-                          color={iconColors.white}
-                          size={iconSizes.xs}
-                        />
-                      </ColoredCircle>
+                      {/* <ColoredCircle color="secondary" size="xs"> */}
+                      <icons.inProgress
+                        color={iconColors.orange}
+                        size={iconSizes.md}
+                      />
+                      {/* </ColoredCircle> */}
                     </div>
                   )}
                 </If>
@@ -88,8 +88,8 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
               </ReactTooltip>
             </FlexBox>
 
-            <FlexBox alignItems="center" >
-              <div data-tip data-for={item.runId} >
+            <FlexBox alignItems="center">
+              <div data-tip data-for={item.runId}>
                 <If condition={item.status === runStatus.FAILED}>
                   {() => (
                     <div
@@ -104,12 +104,12 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
                         );
                       }}
                     >
-                      <ColoredCircle color="red" size="xs">
-                        <icons.close
-                          color={iconColors.white}
-                          size={iconSizes.xs}
-                        />
-                      </ColoredCircle>
+                      {/* <ColoredCircle color="red" size="xs"> */}
+                      <icons.failed
+                        color={iconColors.red}
+                        size={iconSizes.md}
+                      />
+                      {/* </ColoredCircle> */}
                     </div>
                   )}
                 </If>
@@ -119,8 +119,8 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
               </ReactTooltip>
             </FlexBox>
 
-            <FlexBox alignItems="center" >
-              <div data-tip data-for={item.runId} >
+            <FlexBox alignItems="center">
+              <div data-tip data-for={item.runId}>
                 <If condition={item.status === runStatus.CACHED}>
                   {() => (
                     <div
@@ -135,12 +135,12 @@ export const Status: React.FC<{ pipeline: TPipeline }> = ({ pipeline }) => {
                         );
                       }}
                     >
-                      <ColoredCircle color="mustard" size="xs">
-                        <icons.cached
-                          color={iconColors.white}
-                          size={iconSizes.xs}
-                        />
-                      </ColoredCircle>
+                      {/* <ColoredCircle color="mustard" size="xs"> */}
+                      <icons.cached
+                        color={iconColors.butterflyBlue}
+                        size={iconSizes.md}
+                      />
+                      {/* </ColoredCircle> */}
                     </div>
                   )}
                 </If>

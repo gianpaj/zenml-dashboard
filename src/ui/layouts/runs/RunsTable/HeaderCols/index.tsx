@@ -5,7 +5,7 @@ import { iconColors, iconSizes, ID_MAX_LENGTH } from '../../../../../constants';
 
 import { truncate, formatDateToDisplayOnTable } from '../../../../../utils';
 
-import { FlexBox, Paragraph, Box, icons } from '../../../../components';
+import { FlexBox, Paragraph, icons } from '../../../../components';
 import { HeaderCol } from '../../../common/Table';
 import { RunStatus } from '../RunStatus';
 
@@ -59,13 +59,13 @@ export const useHeaderCols = ({
           <Paragraph
             size="small"
             color="black"
-            style={{ fontSize: '12px', marginLeft: '33px' }}
+            style={{ fontSize: '14px', marginLeft: '33px' }}
           >
             RUN ID
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '20%',
       renderRow: (run: TRun) => (
         <FlexBox alignItems="center">
           <div data-tip data-for={run.id}>
@@ -93,11 +93,11 @@ export const useHeaderCols = ({
     },
     {
       render: () => (
-        <Paragraph size="small" color="black">
+        <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
           RUN NAME
         </Paragraph>
       ),
-      width: '10%',
+      width: '30%',
       renderRow: (run: TRun) => (
         <Paragraph
           size="small"
@@ -109,11 +109,11 @@ export const useHeaderCols = ({
     },
     {
       render: () => (
-        <Paragraph size="small" color="black">
+        <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
           PIPELINE
         </Paragraph>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => (
         <Paragraph
           size="small"
@@ -135,33 +135,33 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="grey">
+          <Paragraph size="small" color="grey" style={{ fontSize: '14px' }}>
             STATUS
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => <RunStatus run={run} />,
     },
 
     {
       render: () => (
-        <Paragraph size="small" color="black">
-          STACK NAME
+        <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
+          STACK NAME=
         </Paragraph>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => (
         <Paragraph size="small">{run.stack.name}</Paragraph>
       ),
     },
     {
       render: () => (
-        <Paragraph size="small" color="black">
+        <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
           AUTHOR
         </Paragraph>
       ),
-      width: '10%',
+      width: '7.5%',
       renderRow: (run: TRun) => {
         return (
           <FlexBox alignItems="center">
@@ -189,17 +189,17 @@ export const useHeaderCols = ({
           activeSorting={activeSorting}
           activeSortingDirection={activeSortingDirection}
         >
-          <Paragraph size="small" color="black">
+          <Paragraph size="small" color="black" style={{ fontSize: '14px' }}>
             CREATED
           </Paragraph>
         </SortingHeader>
       ),
-      width: '10%',
+      width: '20%',
       renderRow: (run: TRun) => (
         <FlexBox alignItems="center">
-          <Box paddingRight="sm">
+          {/* <Box paddingRight="sm">
             <icons.calendar color={iconColors.grey} size={iconSizes.sm} />
-          </Box>
+          </Box> */}
           <Paragraph color="grey" size="tiny">
             {formatDateToDisplayOnTable(run.created)}
           </Paragraph>

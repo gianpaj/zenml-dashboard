@@ -13,6 +13,7 @@ import { workspaceSelectors } from '../../../redux/selectors';
 
 export const BasePage: React.FC<{
   tabPages: TabPage[];
+  title?: string;
   fromConfigureComponent?: boolean;
   fromRegisterComponent?: boolean;
   breadcrumbs: TBreadcrumb[];
@@ -23,6 +24,7 @@ export const BasePage: React.FC<{
   fromRegisterComponent = false,
   fromConfigureComponent = false,
   tabPages,
+  title,
   breadcrumbs,
   tabBasePath,
   renderHeaderRight,
@@ -33,12 +35,13 @@ export const BasePage: React.FC<{
   const selectedWorkspace = useSelector(workspaceSelectors.selectedWorkspace);
 
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout breadcrumb={[...breadcrumbs]}>
       <SidebarContainer>
         <IfElse
           condition={!!headerWithButtons}
           renderWhenTrue={() => (
             <Header.HeaderWithButtons
+              title={title}
               breadcrumbs={[...breadcrumbs]}
               renderRight={renderHeaderRight}
             />

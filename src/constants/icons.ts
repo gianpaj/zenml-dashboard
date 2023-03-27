@@ -7,6 +7,9 @@ export enum iconColors {
   red = 'red',
   orange = 'orange',
   mustard = 'mustard',
+  butterflyBlue = 'butterflyBlue',
+  green = 'green',
+  lightGreen = 'lightGreen',
 }
 
 export enum iconSizes {
@@ -15,4 +18,5 @@ export enum iconSizes {
   sm = 'sm',
   md = 'md',
   xs = 'xs',
+  sml = 'sml',
 }
