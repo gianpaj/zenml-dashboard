@@ -59,7 +59,7 @@ export const InputWithLabel = ({
   labelColor,
   optional,
   required,
-  helperText = label,
+  helperText,
 }: {
   InputComponent: JSX.Element;
   label: string;
