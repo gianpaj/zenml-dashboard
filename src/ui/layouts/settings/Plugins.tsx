@@ -272,6 +272,7 @@ export const Plugins: React.FC = () => {
       >
         <Box marginBottom="lg">
           <PrimaryButton
+            disabled={true}
             onClick={() => {
               if (hubIsConnected) {
                 history.push(routePaths.plugins.create(workspace));

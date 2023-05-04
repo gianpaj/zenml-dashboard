@@ -97,6 +97,7 @@ export const ConnectHub: React.FC = () => {
         </GhostButton>
 
         <PrimaryButton
+          disabled={true}
           onClick={async () => {
             const data = await getGitHubRedirectURL();
             setPopupOpen(true);
