@@ -310,13 +310,17 @@ export const DashBoard: React.FC = () => {
                     buttonText={translate('cardOne.button.text')}
                   />
                   <GreyBoxWithIcon
-                    onClick={() => window.open(translate('cardTwo.button.href'), '_blank')}
+                    onClick={() =>
+                      window.open(translate('cardTwo.button.href'), '_blank')
+                    }
                     IconComponent={<icons.tool color={iconColors.white} />}
                     title={translate('cardTwo.title')}
                     buttonText={translate('cardTwo.button.text')}
                   />
                   <GreyBoxWithIcon
-                    onClick={() => window.open(translate('cardThree.button.href'), '_blank')}
+                    onClick={() =>
+                      window.open(translate('cardThree.button.href'), '_blank')
+                    }
                     IconComponent={<icons.userPlus color={iconColors.white} />}
                     title={translate('cardThree.title')}
                     buttonText={translate('cardThree.button.text')}
