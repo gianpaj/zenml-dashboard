@@ -49,6 +49,7 @@ export const FormTextField = (props: {
   disabled?: boolean;
   type?: string;
   optional?: boolean;
+  helperText?: string;
   required?: boolean;
   name?: string;
   style?: any;
@@ -60,6 +61,7 @@ export const FormTextField = (props: {
         required={props.required}
         name={props.name}
         label={props.label}
+        helperText={props.helperText}
         labelColor={props.labelColor}
         InputComponent={
           <TextInput
@@ -88,6 +90,7 @@ export const FormDropdownField = (props: {
   options: any[];
   onChange: (s: string) => void;
   error?: FieldError;
+  helperText?: string;
   disabled?: boolean;
   name?: string;
   style?: any;
@@ -97,6 +100,7 @@ export const FormDropdownField = (props: {
       <InputWithLabel
         name={props.name}
         label={props.label}
+        helperText={props.helperText}
         labelColor={props.labelColor}
         InputComponent={
           <DropdownInput
@@ -123,6 +127,7 @@ export const CopyField = (
     labelColor: any;
     placeholder: any;
     value: string;
+    helperText?: string;
     showTokField: any;
   } & any,
 ): any => {
@@ -140,6 +145,7 @@ export const CopyField = (
       <FlexBox alignItems="center" fullWidth style={{ position: 'relative' }}>
         <InputWithLabel
           name={props.name}
+          helperText={props.helperText}
           label={props.label}
           labelColor={props.labelColor}
           InputComponent={
@@ -354,6 +360,7 @@ export const EditField = (
     placeholder: any;
     value: string;
     defaultValue?: string;
+    helperText?: string;
     optional: boolean;
     viewSecretDetail?: any;
   } & any,
@@ -364,6 +371,7 @@ export const EditField = (
         <InputWithLabel
           name={props.name}
           label={props.label}
+          helperText={props.helperText}
           optional={props.optional}
           labelColor={props.labelColor}
           InputComponent={
@@ -429,6 +437,7 @@ export const EditFieldSettings = (
     placeholder: string;
     value: string;
     optional: boolean;
+    helperText?: string;
     required: boolean;
     type: 'input' | 'textarea';
   } & any,
@@ -452,6 +461,7 @@ export const EditFieldSettings = (
           label={props.label}
           optional={props.optional}
           required={props.required}
+          helperText={props.helperText}
           labelColor={props.labelColor}
           InputComponent={
             <InputComponent
@@ -625,6 +635,7 @@ export const FormPasswordField = (
     value: string;
     onChange: any;
     error: FieldError;
+    helperText?: string;
     showPasswordOption?: boolean;
   } & any,
 ): JSX.Element => {
@@ -634,6 +645,7 @@ export const FormPasswordField = (
       <FlexBox alignItems="center" fullWidth style={{ position: 'relative' }}>
         <InputWithLabel
           name={props.name}
+          helperText={props.helperText}
           label={props.label}
           labelColor={props.labelColor}
           InputComponent={
@@ -684,6 +696,7 @@ export const FormEmailField = (
     labelColor: any;
     placeholder: string;
     value: string;
+    helperText?: string;
     onChange: any;
     error: FieldError;
   } & any,
@@ -691,6 +704,7 @@ export const FormEmailField = (
   <FlexBox.Column fullWidth>
     <FlexBox alignItems="center" fullWidth>
       <InputWithLabel
+        helperText={props.helperText}
         label={props.label}
         labelColor={props.labelColor}
         InputComponent={
@@ -717,12 +731,14 @@ export const FormNumberField = (props: {
   placeholder: string;
   error: any;
   value: string;
+  helperText?: string;
   onChange: any;
 }): JSX.Element => (
   <FlexBox.Column fullWidth>
     <FlexBox alignItems="center" fullWidth>
       <InputWithLabel
         label={props.label}
+        helperText={props.helperText}
         labelColor={props.labelColor}
         InputComponent={
           <TextInput
