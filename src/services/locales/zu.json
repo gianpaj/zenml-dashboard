@@ -287,15 +287,15 @@
             "cardTwo": {
               "title": "Get a free, managed ZenML instance",
               "button": {
-                "text": "Get",
-                "href": "https://zenml.io/cloud"
+                "text": "Manage",
+                "href": "https://docs.zenml.io/"
               }
             },
             "cardThree": {
               "title": "Run the ZenML quickstart",
               "button": {
-                "text": "Code",
-                "href": "https://colab.research.google.com/github/zenml-io/zenml/blob/main/examples/quickstart/notebooks/quickstart.ipynb"
+                "text": "Invite",
+                "href": "https://github.com/zenml-io/zenml/blob/main/examples/quickstart/README.md"
               }
             }
           },
@@ -491,7 +491,7 @@
               "text": "Compare runs"
             },
             "externalLink": {
-              "href": "https://docs.zenml.io/v/wip-docs/run-a-pipeline",
+              "href": "https://docs.zenml.io/user-guide/starter-guide",
               "text": "Documentation"
             },
             "copyWorkspaceCommand": {
@@ -766,7 +766,7 @@
               "text": "Create workspace"
             },
             "externalLink": {
-              "href": "https://docs.zenml.io/v/wip-docs/collaborate/workspaces",
+              "href": "https://docs.zenml.io/",
               "text": "Documentation"
             },
             "copyWorkspaceCommand": {
