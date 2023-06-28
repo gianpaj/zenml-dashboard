@@ -134,6 +134,10 @@ Props) => {
   return (
     <>
       <CollapseTable
+        route={routePaths.stackComponents.registerComponents(
+          locationPath.split('/')[4],
+          selectedWorkspace,
+        )}
         renderAfterRow={(stack: TStack) => (
           <RunsForStackTable
             nestedRow={true}
