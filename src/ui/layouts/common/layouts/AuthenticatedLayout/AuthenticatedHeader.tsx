@@ -41,9 +41,6 @@ import { WorkspacePopup } from './workspacePopup';
 import ReactTooltip from 'react-tooltip';
 import { Breadcrumbs } from '../../Breadcrumbs';
 import DeploymentBanner from './DeploymentBanner';
-// import { CookiePopup } from './CookiePopup'
-
-// import { endpoints } from '../../../../../api/endpoints';
 
 export const AuthenticatedHeader: React.FC<{
   breadcrumb?: Array<any>;
@@ -100,7 +97,6 @@ export const AuthenticatedHeader: React.FC<{
   };
 
   const startLoad = () => {
-    // debugger;
     dispatch(pipelinePagesActions.setFetching({ fetching: true }));
     dispatch(runPagesActions.setFetching({ fetching: true }));
     dispatch(stackPagesActions.setFetching({ fetching: true }));
